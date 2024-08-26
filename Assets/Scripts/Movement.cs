@@ -21,18 +21,13 @@ public class Movement : MonoBehaviour
         {
             vectorList.Add(path.position);
         }
-
-
         Debug.Log(vectorList.Count);
-
 
         tween = target.DOPath(vectorList.ToArray(), 3f, PathType.CatmullRom, PathMode.TopDown2D)
             .SetUpdate(UpdateType.Fixed)
             .SetSpeedBased()
             .SetEase(Ease.Linear)
             .SetLoops(-1, LoopType.Yoyo);
-
-
     }
     void Update()
     {
