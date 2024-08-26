@@ -204,7 +204,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 110502193}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1753686769}
+        m_TargetAssemblyTypeName: CreationSystem, Assembly-CSharp
+        m_MethodName: addGreenBlock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &110502193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -535,7 +547,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 233942425}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1753686769}
+        m_TargetAssemblyTypeName: CreationSystem, Assembly-CSharp
+        m_MethodName: removeBlueBlock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &233942425
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -624,7 +648,7 @@ GameObject:
   - component: {fileID: 387596716}
   - component: {fileID: 387596715}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: count
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1349,7 +1373,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 693342354}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1753686769}
+        m_TargetAssemblyTypeName: CreationSystem, Assembly-CSharp
+        m_MethodName: removeGreenBlock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &693342354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1388,6 +1424,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 693342351}
   m_CullTransparentMesh: 1
+--- !u!1 &749378761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 749378763}
+  - component: {fileID: 749378762}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &749378762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749378761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a0ddcd14416a4e4d91ba8d739b5e3cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  realBlueBlockCount: 2
+  realGreenBlockCount: 3
+  realRedBlockCount: 1
+--- !u!4 &749378763
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749378761}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 947.9969, y: 674.5541, z: -8.596422}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &847565323
 GameObject:
   m_ObjectHideFlags: 0
@@ -2044,7 +2127,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1207508182}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1753686769}
+        m_TargetAssemblyTypeName: CreationSystem, Assembly-CSharp
+        m_MethodName: removeRedBlock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1207508182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2165,7 +2260,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1313659153}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1753686769}
+        m_TargetAssemblyTypeName: CreationSystem, Assembly-CSharp
+        m_MethodName: addBlueBlock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1313659153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2216,7 +2323,7 @@ GameObject:
   - component: {fileID: 1330470607}
   - component: {fileID: 1330470606}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: count
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2368,8 +2475,8 @@ RectTransform:
   m_LocalScale: {x: 0.90000004, y: 0.90000004, z: 1.4999999}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 236593904}
   - {fileID: 847565324}
+  - {fileID: 236593904}
   - {fileID: 1629421774}
   m_Father: {fileID: 2005230508}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2498,7 +2605,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1389118558}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1753686769}
+        m_TargetAssemblyTypeName: CreationSystem, Assembly-CSharp
+        m_MethodName: addRedBlock
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1389118558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2549,7 +2668,7 @@ GameObject:
   - component: {fileID: 1438704525}
   - component: {fileID: 1438704524}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: count
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2785,6 +2904,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1645685850}
   m_CullTransparentMesh: 1
+--- !u!1 &1753686768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1753686770}
+  - component: {fileID: 1753686769}
+  m_Layer: 0
+  m_Name: CreationSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1753686769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753686768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3ce352a25ddedc439993605b7165c76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blueBlockCount: {fileID: 1438704524}
+  greenBlockCount: {fileID: 387596715}
+  redBlockCount: {fileID: 1330470606}
+--- !u!4 &1753686770
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753686768}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 947.9969, y: 674.5541, z: -8.596422}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1783233784
 GameObject:
   m_ObjectHideFlags: 0
@@ -3225,3 +3391,5 @@ SceneRoots:
   - {fileID: 1052647948}
   - {fileID: 1905079315}
   - {fileID: 407377710}
+  - {fileID: 1753686770}
+  - {fileID: 749378763}
