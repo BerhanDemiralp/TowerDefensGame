@@ -5,9 +5,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public int realBlueBlockCount;
-    public int realGreenBlockCount;
-    public int realRedBlockCount;
+    public int BlueBlockCount;
+    public int GreenBlockCount;
+    public int RedBlockCount;
     private void Awake()
     {
         if (instance == null)

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CreationSystem : MonoBehaviour
@@ -9,6 +10,8 @@ public class CreationSystem : MonoBehaviour
     private int blue_block_count;
     private int green_block_count;
     private int red_block_count;
+    private string indicatorType;
+
 
     private int MAX_BLOCK_COUNT = 5;
 
@@ -16,9 +19,12 @@ public class CreationSystem : MonoBehaviour
     public TextMeshProUGUI greenBlockCount;
     public TextMeshProUGUI redBlockCount;
 
+    public Button myButton;
+
     void Start()
     {
         clearCounts();
+
     }
 
     // Update is called once per frame
@@ -28,7 +34,7 @@ public class CreationSystem : MonoBehaviour
         greenBlockCount.text = green_block_count.ToString();
         redBlockCount.text = red_block_count.ToString();
     }
-    
+
     private void clearCounts()
     {
         blue_block_count= 0;
@@ -41,18 +47,22 @@ public class CreationSystem : MonoBehaviour
         switch (type)
         {
             case "blue":
-                if (blue_block_count == GameManager.instance.realBlueBlockCount) { return false; }
+                if (blue_block_count == GameManager.instance.BlueBlockCount) { return false; }
                 break;
             case "green":
-                if (green_block_count == GameManager.instance.realGreenBlockCount) { return false; };
+                if (green_block_count == GameManager.instance.GreenBlockCount) { return false; };
                 break;
             case "red":
-                if (red_block_count == GameManager.instance.realRedBlockCount) { return false; };
-                Debug.Log(GameManager.instance.realRedBlockCount);
+                if (red_block_count == GameManager.instance.RedBlockCount) { return false; };
                 break;
         }
             
         return true;
+    }
+
+    public void selectIndicator(string indicator_type)
+    {
+        indicatorType = indicator_type;
     }
     private bool removeControl(int block_count)
     {
@@ -101,4 +111,5 @@ public class CreationSystem : MonoBehaviour
             red_block_count--;
         }
     }
+
 }
