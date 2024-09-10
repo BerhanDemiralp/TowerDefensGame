@@ -10,7 +10,7 @@ public class CreationSystem : MonoBehaviour
     private int blue_block_count;
     private int green_block_count;
     private int red_block_count;
-    private string indicatorType;
+    private int indicatorType = 0;
     private int block_count = 0;
 
     //Her kule seviyesi için gerekli lego sayıları
@@ -21,6 +21,8 @@ public class CreationSystem : MonoBehaviour
     public TextMeshProUGUI blueBlockCount;
     public TextMeshProUGUI greenBlockCount;
     public TextMeshProUGUI redBlockCount;
+
+    public TextMeshProUGUI indicatorText;
 
     public Button myButton;
 
@@ -66,9 +68,24 @@ public class CreationSystem : MonoBehaviour
         return true;
     }
 
-    public void selectIndicator(string indicator_type)
+    public void changeIndicator()
     {
-        indicatorType = indicator_type;
+        switch(indicatorType){
+            case 0:
+                indicatorText.text = "Vasirus";
+                break;
+            case 1:
+                indicatorText.text = "Kerdar";
+                break;
+            case 2:
+                indicatorText.text = "Dulandar";
+                break;
+            case 3:
+                indicatorText.text = "Jalahun";
+                indicatorType = 0;
+                break;
+        }
+        indicatorType++;
     }
     private bool removeControl(int block_count)
     {
