@@ -11,9 +11,12 @@ public class CreationSystem : MonoBehaviour
     private int green_block_count;
     private int red_block_count;
     private string indicatorType;
+    private int block_count = 0;
 
-
-    private int MAX_BLOCK_COUNT = 5;
+    //Her kule seviyesi için gerekli lego sayıları
+    private const int LEVEL1 = 6;
+    private const int LEVEL2 = 12;
+    private const int LEVEL3 = 24;
 
     public TextMeshProUGUI blueBlockCount;
     public TextMeshProUGUI greenBlockCount;
@@ -24,6 +27,7 @@ public class CreationSystem : MonoBehaviour
     void Start()
     {
         clearCounts();
+        
 
     }
 
@@ -41,10 +45,12 @@ public class CreationSystem : MonoBehaviour
         green_block_count= 0;
         red_block_count= 0;
     }
-    private bool addControl(int block_count,string type)
+    private bool addControl()
     {
-        if (block_count >= MAX_BLOCK_COUNT) { return false; }
-        switch (type)
+        addBlocks();
+        if (block_count == LEVEL3) { return false; }
+        //Buraya gerek olmadığı için deaktive ettim.
+        /*switch (type)
         {
             case "blue":
                 if (blue_block_count == GameManager.instance.BlueBlockCount) { return false; }
@@ -55,7 +61,7 @@ public class CreationSystem : MonoBehaviour
             case "red":
                 if (red_block_count == GameManager.instance.RedBlockCount) { return false; };
                 break;
-        }
+        }*/
             
         return true;
     }
@@ -71,23 +77,29 @@ public class CreationSystem : MonoBehaviour
     }
     public void addBlueBlock()
     {
-        if (addControl(blue_block_count,"blue"))
+        if (addControl())
         {
+            Debug.Log("Blue");
             blue_block_count++;
+            
         }
     }
     public void addGreenBlock()
     {
-        if (addControl(green_block_count,"green"))
+        if (addControl())
         {
+            Debug.Log("Green");
             green_block_count++;
+            
         }
     }
     public void addRedBlock()
     {
-        if (addControl(red_block_count, "red"))
+        if (addControl())
         {
+            Debug.Log("Red");
             red_block_count++;
+            
         }
     }
     public void removeBlueBlock()
@@ -110,6 +122,28 @@ public class CreationSystem : MonoBehaviour
         {
             red_block_count--;
         }
+    }
+    public void addBlocks()
+    {block_count = blue_block_count + red_block_count + green_block_count;}
+
+    public void createTower()
+    {
+        addBlocks();
+        switch (block_count){
+            case LEVEL1:
+                Debug.Log("Wow you have a Level 1 Tower!"); 
+                break;
+            case LEVEL2:
+                Debug.Log("Wow you have a Level 2 Tower!");
+                break;
+            case LEVEL3:
+                Debug.Log("Wow you have a Level 3 Tower!");
+                break;
+            default:
+                Debug.Log("Towers must have 6, 12 or 24 blocks!");
+                break;
+    }
+        
     }
 
 }
