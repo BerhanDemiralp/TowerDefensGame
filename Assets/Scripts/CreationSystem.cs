@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class CreationSystem : MonoBehaviour
 {
     private bool isUIon = false;
-    private bool canPlace = false;
+    public bool canPlace = false;
 
     private int blue_block_count;
     private int green_block_count;

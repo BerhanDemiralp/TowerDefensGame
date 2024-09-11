@@ -5,6 +5,8 @@ using DG.Tweening;
 
 public class Movement : MonoBehaviour
 {
+    public GameObject road;
+
     public Transform target;
     public float speed = 3f;
     public Transform paths;
@@ -15,13 +17,15 @@ public class Movement : MonoBehaviour
 
     void Start()
     {
-        vectorList = new List<Vector3>(); // Liste çevirilme amacý anlýk olarak vectore ekleme çýkarma yapabilme
+        //ransform.position = road.transform.position;
+
+        vectorList = new List<Vector3>(); // Liste ï¿½evirilme amacï¿½ anlï¿½k olarak vectore ekleme ï¿½ï¿½karma yapabilme
 
         foreach (Transform path in paths)
         {
             vectorList.Add(path.position);
         }
-        Debug.Log(vectorList.Count);
+        //Debug.Log(vectorList.Count);
 
         tween = target.DOPath(vectorList.ToArray(), 3f, PathType.CatmullRom, PathMode.TopDown2D)
             .SetUpdate(UpdateType.Fixed)
