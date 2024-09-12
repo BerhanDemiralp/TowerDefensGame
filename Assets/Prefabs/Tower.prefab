@@ -29,7 +29,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.50000006, z: 0}
   m_LocalScale: {x: 0.25, y: 0.51299995, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1618362538277822068}
   m_Father: {fileID: 8103978737613193403}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3458933299451898026
@@ -115,6 +116,37 @@ Transform:
   m_Children:
   - {fileID: 613253399271664132}
   m_Father: {fileID: 1013102293356165447}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3035401678387499276
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1618362538277822068}
+  m_Layer: 0
+  m_Name: StandartFiringPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1618362538277822068
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3035401678387499276}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.39, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 613253399271664132}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7990186379071174768
 GameObject:
@@ -215,11 +247,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   turretRotationPoint: {fileID: 8103978737613193403}
+  firingPoint: {fileID: 1618362538277822068}
   enemyMask:
     serializedVersion: 2
     m_Bits: 64
-  targetingRange: 4
+  standartBulletPrefab: {fileID: 863455698326386803, guid: 35ab6a40f58c98544a81912e6c06c8e0, type: 3}
+  damage: 0
+  attackSpeed: 0
+  range: 0
   rotationSpeed: 250
+  canShoot: 0
 --- !u!1001 &6617327907790655733
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -274,6 +311,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 6003235316551288113, guid: 4287394e300a3dd49942c8e49218b3c8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1618362538277822068}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4287394e300a3dd49942c8e49218b3c8, type: 3}

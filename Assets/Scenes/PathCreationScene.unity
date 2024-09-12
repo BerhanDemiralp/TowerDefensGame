@@ -234,11 +234,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1013102293356165447, guid: d8e8d864f1fc1034b83d4a9baa09a958, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.07
+      value: 0.58
       objectReference: {fileID: 0}
     - target: {fileID: 1013102293356165447, guid: d8e8d864f1fc1034b83d4a9baa09a958, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.05
+      value: 3.86
       objectReference: {fileID: 0}
     - target: {fileID: 1013102293356165447, guid: d8e8d864f1fc1034b83d4a9baa09a958, type: 3}
       propertyPath: m_LocalPosition.z
@@ -272,6 +272,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4748846053792442042, guid: d8e8d864f1fc1034b83d4a9baa09a958, type: 3}
+      propertyPath: range
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4748846053792442042, guid: d8e8d864f1fc1034b83d4a9baa09a958, type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 863455698326386803, guid: 35ab6a40f58c98544a81912e6c06c8e0, type: 3}
     - target: {fileID: 4748846053792442042, guid: d8e8d864f1fc1034b83d4a9baa09a958, type: 3}
       propertyPath: rotationSpeed
       value: 250

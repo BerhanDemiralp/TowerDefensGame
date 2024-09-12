@@ -33,6 +33,7 @@ public class CreationSystem : MonoBehaviour
     public GameObject tower;
 
     private GameObject towerOnMouseTemp;
+    GameObject towerTemp;
 
     void Start()
     {
@@ -51,26 +52,16 @@ public class CreationSystem : MonoBehaviour
         {
             if(canPlace)
             {
-                Instantiate(tower, towerOnMouseTemp.transform.position, towerOnMouseTemp.transform.rotation);
+                towerTemp = Instantiate(tower, towerOnMouseTemp.transform.position, towerOnMouseTemp.transform.rotation);
+                towerTemp.GetComponent<Tower>().getBlocks(red_block_count, blue_block_count, green_block_count);
+                towerTemp.GetComponent<Tower>().setIndicator(0);
+                //towerTemp.getBlocks(red_block_count, blue_block_count, green_block_count);
                 Destroy(towerOnMouseTemp);
-                canPlace = false;
-            }       
+                clearCounts();
+                StartCoroutine(WaitForNextTowerCreation());
+            } 
         } 
     }
-
-    private void clearCounts()
-    {
-        blue_block_count= 0;
-        green_block_count= 0;
-        red_block_count= 0;
-    }
-    private bool addControl()
-    {
-        addBlocks();
-        if (block_count == LEVEL3) { return false; }
-        return true;
-    }
-
     public void changeIndicator()
     {
         switch(indicatorType){
@@ -90,6 +81,18 @@ public class CreationSystem : MonoBehaviour
         }
         indicatorType++;
     }
+    private void clearCounts()
+    {
+        blue_block_count= 0;
+        green_block_count= 0;
+        red_block_count= 0;
+    }
+    private bool addControl()
+    {
+        addBlocks();
+        if (block_count == LEVEL3) { return false; }
+        return true;
+    }
     private bool removeControl(int block_count)
     {
         if (block_count == 0) { return false; }
@@ -99,27 +102,21 @@ public class CreationSystem : MonoBehaviour
     {
         if (addControl())
         {
-            Debug.Log("Blue");
             blue_block_count++;
-            
         }
     }
     public void addGreenBlock()
     {
         if (addControl())
         {
-            Debug.Log("Green");
             green_block_count++;
-            
         }
     }
     public void addRedBlock()
     {
         if (addControl())
         {
-            Debug.Log("Red");
             red_block_count++;
-            
         }
     }
     public void removeBlueBlock()
@@ -198,17 +195,15 @@ public class CreationSystem : MonoBehaviour
         towerOnMouseTemp = Instantiate(towerOnMouseObj);
         canPlace = true;
     }
-
-
-    /*private void MouseDownEvent()
+    
+    private IEnumerator WaitForNextTowerCreation()
     {
-        if(canPlace)
-        {
-            Instantiate(tower, towerOnMouseTemp.transform.position, towerOnMouseTemp.transform.rotation);
-            Destroy(towerOnMouseTemp);
-            canPlace = false;
-        }
-    }*/
+        yield return new WaitForSeconds(0.1f);
+        canPlace = false;
+    }    
+
+
+    
     
 
 
