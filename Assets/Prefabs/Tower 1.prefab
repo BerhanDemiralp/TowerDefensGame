@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: 3193736232019025670}
   - component: {fileID: 3685806250313502909}
   m_Layer: 0
-  m_Name: Tower
+  m_Name: Tower 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -251,7 +251,7 @@ MonoBehaviour:
   enemyMask:
     serializedVersion: 2
     m_Bits: 64
-  standartBullet: {fileID: 863455698326386803, guid: 35ab6a40f58c98544a81912e6c06c8e0, type: 3}
+  standartBullet: {fileID: 0}
   damage: 0
   attackSpeed: 0
   range: 0

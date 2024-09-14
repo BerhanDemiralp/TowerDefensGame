@@ -10,7 +10,7 @@ public class StandartBullet : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     
     [Header("Attribute")]
-    [SerializeField] private float speed = 30f;
+    [SerializeField] private float speed = 3f;
     [SerializeField] private float rotationSpeed = 300f;
 
     private Transform target;
@@ -19,7 +19,7 @@ public class StandartBullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+    
     }
 
     // Update is called once per frame
@@ -48,5 +48,18 @@ public class StandartBullet : MonoBehaviour
     public void ANIR()
     {
         Debug.Log("Ai ai");
+    }
+
+    /// <summary>
+    /// Sent when another object enters a trigger collider attached to this
+    /// object (2D physics only).
+    /// </summary>
+    /// <param name="other">The other Collider2D involved in this collision.</param>
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.tag == "MainRoadEnemy")
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

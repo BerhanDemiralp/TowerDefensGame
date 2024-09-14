@@ -12,7 +12,7 @@ public class Tower : MonoBehaviour
     [SerializeField] private Transform turretRotationPoint;
     [SerializeField] private Transform firingPoint;
     [SerializeField] private LayerMask enemyMask;
-    [SerializeField] private GameObject standartBulletPrefab;
+    [SerializeField] private GameObject standartBullet;
     
     
     [Header("Attribute")]
@@ -43,7 +43,7 @@ public class Tower : MonoBehaviour
     void Start()
     {
         timeUntilFire = 10f;
-        standartBulletPrefab = GameObject.Find("StandartBullet"); 
+        //standartBullet = GameObject.Find("StandartBullet"); 
     }
 
     // Update is called once per frame
@@ -150,8 +150,8 @@ public class Tower : MonoBehaviour
 
     private void ShootStandartBullet()
     {
-        Debug.Log(standartBulletPrefab.name);
-        var bullet = Instantiate(standartBulletPrefab, firingPoint.position, Quaternion.identity);
+        Debug.Log(standartBullet.name);
+        var bullet = Instantiate(standartBullet, firingPoint.position, Quaternion.identity);
         StandartBullet bulletScript = bullet.GetComponent<StandartBullet>();
         bulletScript.SetTarget(target);
         Debug.Log("Shot fired!");
