@@ -26,7 +26,6 @@ public class StandartBullet : MonoBehaviour
     void FixedUpdate()
     {
         RotateTowardsTarget();
-        //transform.position += transform.forward * Time.deltaTime * speed;
         Vector2 direction = (target.position - transform.position).normalized;
         rb.velocity = direction * speed;
 
