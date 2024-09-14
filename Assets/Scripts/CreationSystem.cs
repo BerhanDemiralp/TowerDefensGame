@@ -8,7 +8,8 @@ using UnityEngine.UI;
 public class CreationSystem : MonoBehaviour
 {
     private bool isUIon = false;
-    private bool canPlace = false;
+    private bool canOpen = false;
+    private bool canPlace = true;
 
     private int blue_block_count;
     private int green_block_count;
@@ -47,14 +48,21 @@ public class CreationSystem : MonoBehaviour
         greenBlockCount.text = green_block_count.ToString();
         redBlockCount.text = red_block_count.ToString();
 
-        if (Input.GetMouseButtonDown(0))
+        if (canOpen && Input.GetMouseButtonDown(0))
         {
-            if(canPlace)
+            canPlace = towerOnMouseTemp.GetComponent<TowerImageOnMouse>().canPlace;
+            if (canPlace)
             {
                 Instantiate(tower, towerOnMouseTemp.transform.position, towerOnMouseTemp.transform.rotation);
                 Destroy(towerOnMouseTemp);
-                canPlace = false;
-            }       
+                canOpen = false;
+            }
+            else
+            {
+                canOpen= false;
+                Destroy(towerOnMouseTemp);
+                openUI();
+            }
         } 
     }
 
@@ -148,7 +156,7 @@ public class CreationSystem : MonoBehaviour
 
     public void createTower()
     {
-        if(!canPlace){
+        if(!canOpen){
             addBlocks();
             switch (block_count){
                 case LEVEL1:
@@ -177,7 +185,7 @@ public class CreationSystem : MonoBehaviour
 
     public void openUI()
     {
-        if(!isUIon && !canPlace){
+        if(!isUIon && !canOpen){
             creationPanel.transform.position += new Vector3(0, 400, 0);
             isUIon = true;
             Debug.Log("Opening UI!");
@@ -186,7 +194,7 @@ public class CreationSystem : MonoBehaviour
 
     public void closeUI()
     {
-        if(isUIon && !canPlace){
+        if(isUIon && !canOpen){
             creationPanel.transform.position += new Vector3(0, -400, 0);
             isUIon = false;
             Debug.Log("Closing UI!");
@@ -196,17 +204,18 @@ public class CreationSystem : MonoBehaviour
     public void towerOnMouse()
     {
         towerOnMouseTemp = Instantiate(towerOnMouseObj);
-        canPlace = true;
+        canOpen = true;
+
     }
 
 
     /*private void MouseDownEvent()
     {
-        if(canPlace)
+        if(canOpen)
         {
             Instantiate(tower, towerOnMouseTemp.transform.position, towerOnMouseTemp.transform.rotation);
             Destroy(towerOnMouseTemp);
-            canPlace = false;
+            canOpen = false;
         }
     }*/
     
