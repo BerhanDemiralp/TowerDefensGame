@@ -17,7 +17,8 @@ public class Movement : MonoBehaviour
 
     void Start()
     {
-        //ransform.position = road.transform.position;
+        road = GameObject.Find("Path");
+        paths = GameObject.Find("Path").transform;
 
         vectorList = new List<Vector3>(); // Liste �evirilme amac� anl�k olarak vectore ekleme ��karma yapabilme
 

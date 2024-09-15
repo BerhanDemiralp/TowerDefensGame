@@ -9,20 +9,33 @@ public class StandartBullet : MonoBehaviour
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
     
+    
     [Header("Attribute")]
     [SerializeField] private float speed = 3f;
     [SerializeField] private float rotationSpeed = 300f;
 
     private Transform target;
+    private GameObject creator;
+
+    public float damage = 0f;
 
 
     // Start is called before the first frame update
     void Start()
-    {
-    
+    {   
+        GameObject rotationPoint = creator.transform.GetChild(0).gameObject;
+        transform.rotation = rotationPoint.transform.rotation;
     }
 
-    // Update is called once per frame
+    
+    private void Update()
+    {
+        if(target == null)
+        {
+            Destroy(gameObject);
+        }
+    }
+    
     void FixedUpdate()
     {
         RotateTowardsTarget();
@@ -45,21 +58,37 @@ public class StandartBullet : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
         this.transform.rotation = Quaternion.RotateTowards(this.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
-    public void ANIR()
-    {
-        Debug.Log("Ai ai");
-    }
-
-    /// <summary>
-    /// Sent when another object enters a trigger collider attached to this
-    /// object (2D physics only).
-    /// </summary>
-    /// <param name="other">The other Collider2D involved in this collision.</param>
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.tag == "MainRoadEnemy")
         {
-            Destroy(this.gameObject);
+            if(other.gameObject.transform == target)
+            {
+                MainRoadEnemy targerScript = other.GetComponent<MainRoadEnemy>();
+                targerScript.dealDamage(damage);
+                Debug.Log(damage + " damage dealt!");
+                Destroy(this.gameObject);
+            }
+            
         }
+    }
+
+    public void setCreator(GameObject _creator)
+    {
+        creator = _creator;
+    }
+
+    public void setDamage(float _damage)
+    {
+        damage = _damage;
+    }
+
+
+
+
+    public void ANIR()
+    {
+        Debug.Log("Ai ai");
     }
 }

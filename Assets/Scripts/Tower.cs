@@ -22,11 +22,11 @@ public class Tower : MonoBehaviour
     [SerializeField] private float rotationSpeed = 30f;
     [SerializeField] private bool canShoot = true;
 
+    private Transform target;
+
+
     private float timeUntilFire = 10;
 
-
-    private Transform target;
-    
     private int blueBlock;
     private int greenBlock;
     private int redBlock;
@@ -150,11 +150,11 @@ public class Tower : MonoBehaviour
 
     private void ShootStandartBullet()
     {
-        Debug.Log(standartBullet.name);
         var bullet = Instantiate(standartBullet, firingPoint.position, Quaternion.identity);
         StandartBullet bulletScript = bullet.GetComponent<StandartBullet>();
         bulletScript.SetTarget(target);
-        Debug.Log("Shot fired!");
+        bulletScript.setCreator(gameObject);
+        bulletScript.setDamage(damage);
     }
 
     private void OnCollisionEnter2D(Collision2D other)

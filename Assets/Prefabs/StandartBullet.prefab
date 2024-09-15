@@ -100,8 +100,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 611574288477988590}
+  tower: {fileID: 6050851506018446526, guid: 38d01e5d06aef9344b4e85302030f4df, type: 3}
   speed: 3
-  rotationSpeed: 300
+  rotationSpeed: 450
 --- !u!61 &6010033177643425534
 BoxCollider2D:
   m_ObjectHideFlags: 0
