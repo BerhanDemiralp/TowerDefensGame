@@ -12,7 +12,8 @@ public class Tower : MonoBehaviour
     [SerializeField] private Transform turretRotationPoint;
     [SerializeField] private Transform firingPoint;
     [SerializeField] private LayerMask enemyMask;
-    [SerializeField] private GameObject standartBullet;
+    [SerializeField] private GameObject[] bullets;
+    
     
     
     [Header("Attribute")]
@@ -23,7 +24,8 @@ public class Tower : MonoBehaviour
     [SerializeField] private bool canShoot = true;
 
     private Transform target;
-
+    
+    private Quaternion targetRotation;
 
     private float timeUntilFire = 10;
 
@@ -43,10 +45,8 @@ public class Tower : MonoBehaviour
     void Start()
     {
         timeUntilFire = 10f;
-        //standartBullet = GameObject.Find("StandartBullet"); 
     }
 
-    // Update is called once per frame
     void Update()
     {
         timeUntilFire += Time.deltaTime;
@@ -67,13 +67,16 @@ public class Tower : MonoBehaviour
        }else
         {
             
-            if(timeUntilFire >= 1f / attackSpeed)
+            if(timeUntilFire >= 1f / attackSpeed && CompareQuaternion(turretRotationPoint.rotation, targetRotation))
             {
                 Fire();
                 timeUntilFire = 0;
             }
             
         }
+        /*Debug.Log(CompareQuaternion(transform.rotation, targetRotation));
+        Debug.Log(transform.rotation);
+        Debug.Log(targetRotation);*/
 
        
     }
@@ -89,7 +92,7 @@ public class Tower : MonoBehaviour
     {
         float angle = Mathf.Atan2(target.position.y - transform.position.y, target.position.x - transform.position.x) * Mathf.Rad2Deg - 90;
 
-        Quaternion targetRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+        targetRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
         turretRotationPoint.rotation = Quaternion.RotateTowards(turretRotationPoint.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
@@ -121,20 +124,17 @@ public class Tower : MonoBehaviour
         Debug.Log(damage + " - " + attackSpeed + " - " + range);
     }
     
-    public void setIndicator(int indicatorTemp)
+    public void setIndicator(int _indicator)
     {
-        switch(indicatorTemp){
+        switch(_indicator){
             case 0:
                 indicator = "Standart";
-                Debug.Log("Indicator is " + indicator);
                 break;
-            case 1:
-                //Belirteç adı.
-                break;
-            case 2:
-                //Belirteç adı.
+            case 1: 
+                indicator = "Bomber";
                 break;
         }
+        Debug.Log("Indicator is " + indicator);
     }
 
     private void Fire()
@@ -142,19 +142,32 @@ public class Tower : MonoBehaviour
         switch(indicator)
         {
             case "Standart":
-                ShootStandartBullet();
+                ShootStandart();
+                break;
+            case "Bomber":
+                ShootBomber();
                 break;
         }
 
     }
 
-    private void ShootStandartBullet()
+    private void ShootStandart()
     {
-        var bullet = Instantiate(standartBullet, firingPoint.position, Quaternion.identity);
+        var bullet = Instantiate(bullets[0], firingPoint.position, Quaternion.identity);
         StandartBullet bulletScript = bullet.GetComponent<StandartBullet>();
         bulletScript.SetTarget(target);
         bulletScript.setCreator(gameObject);
         bulletScript.setDamage(damage);
+    }
+
+    private void ShootBomber()
+    {
+        var bullet = Instantiate(bullets[1], firingPoint.position, Quaternion.identity);
+        BomberBullet bulletScript = bullet.GetComponent<BomberBullet>();
+        bulletScript.SetTarget(target);
+        bulletScript.SetCreator(gameObject);
+        bulletScript.SetDamage(damage);
+        Debug.Log("Bomber bullet shot!");
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -164,6 +177,16 @@ public class Tower : MonoBehaviour
             //Düşmana hasar vur.
             Destroy(this);
         }
+    }
+
+    public bool CompareQuaternion(Quaternion q1,Quaternion q2)
+    {
+        if (q1.x == q2.x&& q1.y == q2.y && q1.z == q2.z && q1.w == q2.w)
+        {
+        return true;
+        }       
+
+    return false;
     }
 
 }

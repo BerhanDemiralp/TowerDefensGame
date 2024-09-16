@@ -175,9 +175,9 @@ Transform:
   m_GameObject: {fileID: 6050851506018446526}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.51, y: -1.03, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -2.7492, y: -1.2412, z: 0}
+  m_LocalScale: {x: 0.5216, y: 0.5216, z: 0.5216}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6772963130928007471}
   m_Father: {fileID: 0}
@@ -251,7 +251,7 @@ MonoBehaviour:
   enemyMask:
     serializedVersion: 2
     m_Bits: 64
-  standartBullet: {fileID: 0}
+  bullets: []
   damage: 0
   attackSpeed: 0
   range: 0

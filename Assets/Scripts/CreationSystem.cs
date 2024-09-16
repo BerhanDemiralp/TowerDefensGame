@@ -38,6 +38,7 @@ public class CreationSystem : MonoBehaviour
     void Start()
     {
         clearCounts();
+        indicatorType = 0;
         creationPanel.transform.position += new Vector3(0, -400, 0);
     }
 
@@ -54,11 +55,14 @@ public class CreationSystem : MonoBehaviour
             {
                 towerTemp = Instantiate(tower, towerOnMouseTemp.transform.position, towerOnMouseTemp.transform.rotation);
                 towerTemp.GetComponent<Tower>().getBlocks(red_block_count, blue_block_count, green_block_count);
-                towerTemp.GetComponent<Tower>().setIndicator(0);
+                Debug.Log(indicatorType + " from CreationSystem");
+                towerTemp.GetComponent<Tower>().setIndicator(indicatorType);
                 //towerTemp.getBlocks(red_block_count, blue_block_count, green_block_count);
                 Destroy(towerOnMouseTemp);
-                clearCounts();
                 StartCoroutine(WaitForNextTowerCreation());
+                clearCounts();
+                indicatorType = 0;
+                indicatorText.text = "Standart";
             } 
         } 
     }
@@ -66,7 +70,7 @@ public class CreationSystem : MonoBehaviour
     {
         switch(indicatorType){
             case 0:
-                indicatorText.text = "Vasirus";
+                indicatorText.text = "Bomber";
                 break;
             case 1:
                 indicatorText.text = "Kerdar";
@@ -75,8 +79,8 @@ public class CreationSystem : MonoBehaviour
                 indicatorText.text = "Dulandar";
                 break;
             case 3:
-                indicatorText.text = "Jalahun";
-                indicatorType = 0;
+                indicatorText.text = "Standart";
+                indicatorType = -1;
                 break;
         }
         indicatorType++;

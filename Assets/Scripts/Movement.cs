@@ -28,7 +28,7 @@ public class Movement : MonoBehaviour
         }
         //Debug.Log(vectorList.Count);
 
-        tween = target.DOPath(vectorList.ToArray(), 3f, PathType.CatmullRom, PathMode.TopDown2D)
+        tween = target.DOPath(vectorList.ToArray(), speed, PathType.CatmullRom, PathMode.TopDown2D)
             .SetUpdate(UpdateType.Fixed)
             .SetSpeedBased()
             .SetEase(Ease.Linear)

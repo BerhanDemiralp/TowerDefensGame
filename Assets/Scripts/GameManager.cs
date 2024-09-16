@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
 
     public int enemyCount = 0;
 
+    public int blockCount = 30;
+    public int PlayerHp = 10;
+
     public int BlueBlockCount;
     public int GreenBlockCount;
     public int RedBlockCount;
@@ -31,12 +34,12 @@ public class GameManager : MonoBehaviour
     {
         timeUntilNextSpawn += Time.deltaTime;
 
-        if(timeUntilNextSpawn >= 3)
+        if(timeUntilNextSpawn >= 3 && enemyCount < 10)
         {
             summon = Instantiate(mainRoadEnemies[0]);
             MainRoadEnemy summonScript = summon.GetComponent<MainRoadEnemy>();
             enemyCount++;
-            summonScript.setHitPoints(50);
+            summonScript.setHitPoints(50f);
             Debug.Log("Enemy summoned with " + summonScript.hitPoints + "hit points!");
             timeUntilNextSpawn = 0;
         }
