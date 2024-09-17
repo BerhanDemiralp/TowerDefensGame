@@ -13,7 +13,12 @@ public class GameManager : MonoBehaviour
     private GameObject summon;
     private float timeUntilNextSpawn = 0f;
 
+    [Header("References")]
+    
+    public int maxEnemyCount = 10;
+    public float spawnCooldown = 3f;
     public int enemyCount = 0;
+    public int enemyCountTemp = 0;
 
     public int blockCount = 30;
     public int PlayerHp = 10;
@@ -34,12 +39,14 @@ public class GameManager : MonoBehaviour
     {
         timeUntilNextSpawn += Time.deltaTime;
 
-        if(timeUntilNextSpawn >= 3 && enemyCount < 10)
+        if(timeUntilNextSpawn >= spawnCooldown && enemyCountTemp < maxEnemyCount)
         {
             summon = Instantiate(mainRoadEnemies[0]);
             MainRoadEnemy summonScript = summon.GetComponent<MainRoadEnemy>();
             enemyCount++;
-            summonScript.setHitPoints(50f);
+            enemyCountTemp++;
+            summonScript.SetHitPoints(50f);
+            summonScript.SetCount(enemyCount);
             Debug.Log("Enemy summoned with " + summonScript.hitPoints + "hit points!");
             timeUntilNextSpawn = 0;
         }

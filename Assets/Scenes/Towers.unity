@@ -207,7 +207,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1753686769}
         m_TargetAssemblyTypeName: CreationSystem, Assembly-CSharp
-        m_MethodName: addGreenBlock
+        m_MethodName: AddGreenBlock
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -550,7 +550,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1753686769}
         m_TargetAssemblyTypeName: CreationSystem, Assembly-CSharp
-        m_MethodName: removeBlueBlock
+        m_MethodName: RemoveBlueBlock
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1033,7 +1033,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1753686769}
         m_TargetAssemblyTypeName: CreationSystem, Assembly-CSharp
-        m_MethodName: createTower
+        m_MethodName: CreateTower
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1434,7 +1434,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1753686769}
         m_TargetAssemblyTypeName: CreationSystem, Assembly-CSharp
-        m_MethodName: removeGreenBlock
+        m_MethodName: RemoveGreenBlock
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1515,6 +1515,8 @@ MonoBehaviour:
   mainRoadEnemies:
   - {fileID: 7478460425901717817, guid: 8d003e441878c274090d9b93822a4440, type: 3}
   enemyCount: 0
+  blockCount: 30
+  PlayerHp: 10
   BlueBlockCount: 3
   GreenBlockCount: 3
   RedBlockCount: 3
@@ -2240,7 +2242,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1753686769}
         m_TargetAssemblyTypeName: CreationSystem, Assembly-CSharp
-        m_MethodName: removeRedBlock
+        m_MethodName: RemoveRedBlock
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2373,7 +2375,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1753686769}
         m_TargetAssemblyTypeName: CreationSystem, Assembly-CSharp
-        m_MethodName: changeIndicator
+        m_MethodName: ChangeIndicator
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2640,7 +2642,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1753686769}
         m_TargetAssemblyTypeName: CreationSystem, Assembly-CSharp
-        m_MethodName: addBlueBlock
+        m_MethodName: AddBlueBlock
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2985,7 +2987,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1753686769}
         m_TargetAssemblyTypeName: CreationSystem, Assembly-CSharp
-        m_MethodName: addRedBlock
+        m_MethodName: AddRedBlock
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3252,7 +3254,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1753686769}
         m_TargetAssemblyTypeName: CreationSystem, Assembly-CSharp
-        m_MethodName: closeUI
+        m_MethodName: CloseUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3443,7 +3445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3ce352a25ddedc439993605b7165c76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canPlace: 0
+  canPlace: 1
   blueBlockCount: {fileID: 1438704524}
   greenBlockCount: {fileID: 387596715}
   redBlockCount: {fileID: 1330470606}

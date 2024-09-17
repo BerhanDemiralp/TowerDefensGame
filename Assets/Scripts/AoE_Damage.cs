@@ -7,6 +7,8 @@ public class AoE_Damage : MonoBehaviour
 {
     [Header("Attributes")]
     [SerializeField] private float damage = 0;
+    [SerializeField] private float areaRadius = 5;
+    
     
     private float timeUntilDestroy = 0f;
 
@@ -22,7 +24,7 @@ public class AoE_Damage : MonoBehaviour
     void Update()
     {
         timeUntilDestroy += Time.deltaTime;
-        transform.localScale += new UnityEngine.Vector3(7*Time.deltaTime, 7*Time.deltaTime, 0);
+        transform.localScale += new UnityEngine.Vector3(areaRadius * Time.deltaTime, areaRadius * Time.deltaTime, 0);
 
         if(timeUntilDestroy >= 0.25f)
         {
@@ -35,7 +37,7 @@ public class AoE_Damage : MonoBehaviour
         if(other.gameObject.tag == "MainRoadEnemy" || other.gameObject.tag == "SideRoadEnemy")
         {
         MainRoadEnemy targerScript = other.GetComponent<MainRoadEnemy>();
-        targerScript.dealDamage(damage);
+        targerScript.DealDamage(damage);
         Debug.Log(damage + " damage dealt!");
         }
              

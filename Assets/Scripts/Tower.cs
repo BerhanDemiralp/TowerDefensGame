@@ -5,6 +5,7 @@ using UnityEditor;
 using System.Runtime.CompilerServices;
 using Unity.Mathematics;
 using Unity.IO.LowLevel.Unsafe;
+using System.Diagnostics.Tracing;
 
 public class Tower : MonoBehaviour
 {
@@ -27,6 +28,10 @@ public class Tower : MonoBehaviour
     
     private Quaternion targetRotation;
 
+    private SpriteRenderer this_SpriteRenderer;
+
+    //public Color color;
+
     private float timeUntilFire = 10;
 
     private int blueBlock;
@@ -45,6 +50,7 @@ public class Tower : MonoBehaviour
     void Start()
     {
         timeUntilFire = 10f;
+        //this_SpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -108,15 +114,15 @@ public class Tower : MonoBehaviour
         return Vector2.Distance(target.position, transform.position) <= range;
     }
 
-    public void getBlocks(int redBlockTemp, int blueBlockTemp, int greenBlockTemp)
+    public void GetBlocks(int redBlockTemp, int blueBlockTemp, int greenBlockTemp)
     {
         redBlock = redBlockTemp;
         blueBlock = blueBlockTemp;
         greenBlock = greenBlockTemp;
-        setStats();
+        SetStats();
     }
 
-    private void setStats()
+    private void SetStats()
     {
         damage = 12f + (redBlock* 4f);
         attackSpeed = 0.33f + (blueBlock * 0.10f);
@@ -124,14 +130,20 @@ public class Tower : MonoBehaviour
         Debug.Log(damage + " - " + attackSpeed + " - " + range);
     }
     
-    public void setIndicator(int _indicator)
+    public void SetIndicator(int _indicator)
     {
         switch(_indicator){
             case 0:
                 indicator = "Standart";
+                //this_SpriteRenderer.color = Color.white;
                 break;
             case 1: 
                 indicator = "Bomber";
+                //this_SpriteRenderer.color = Color.red;
+                break;
+            case 2:
+                indicator = "Gunner";
+                //this_SpriteRenderer.color = new Color(215, 4, 166, 255);
                 break;
         }
         Debug.Log("Indicator is " + indicator);
@@ -146,6 +158,9 @@ public class Tower : MonoBehaviour
                 break;
             case "Bomber":
                 ShootBomber();
+                break;
+            case "Gunner":
+                ShootGunner();
                 break;
         }
 
@@ -170,14 +185,25 @@ public class Tower : MonoBehaviour
         Debug.Log("Bomber bullet shot!");
     }
 
+    private void ShootGunner()
+    {
+        var bullet = Instantiate(bullets[2], firingPoint.position, Quaternion.identity);
+        GunnerBullet bulletScript = bullet.GetComponent<GunnerBullet>();
+        bulletScript.SetTarget(target);
+        bulletScript.SetCreator(gameObject);
+        bulletScript.SetDamage(damage);
+        Debug.Log("Gunner bullet shot!");
+    }
+
+    /* Anıt olarak bırakıyorum burada.
     private void OnCollisionEnter2D(Collision2D other)
     {
         if(other.gameObject.tag == "MainRoadEnemy")
         {
             //Düşmana hasar vur.
-            Destroy(this);
+            Destroy(gameObject);
         }
-    }
+    }*/
 
     public bool CompareQuaternion(Quaternion q1,Quaternion q2)
     {
@@ -187,6 +213,12 @@ public class Tower : MonoBehaviour
         }       
 
     return false;
+    }
+    
+    public void SetColor(Color _color)
+    {
+        this_SpriteRenderer = GetComponent<SpriteRenderer>();
+        this_SpriteRenderer.color = _color;
     }
 
 }
