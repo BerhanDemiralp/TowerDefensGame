@@ -74,6 +74,7 @@ public class GunnerBullet : MonoBehaviour
             if(hits.Length > 0 && hit.collider.GetComponent<MainRoadEnemy>().enemyCount > currentTarget.GetComponent<MainRoadEnemy>().enemyCount)
             {
                 target = hits[i].transform;
+                if(targetCount != 0){speed *= targetCount;}
                 return true;
             }else{i++;}
         }

@@ -114,7 +114,7 @@ public class Tower : MonoBehaviour
         return Vector2.Distance(target.position, transform.position) <= range;
     }
 
-    public void GetBlocks(int redBlockTemp, int blueBlockTemp, int greenBlockTemp)
+    public void SetBlocks(int redBlockTemp, int blueBlockTemp, int greenBlockTemp)
     {
         redBlock = redBlockTemp;
         blueBlock = blueBlockTemp;

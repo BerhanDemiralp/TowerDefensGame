@@ -58,17 +58,12 @@ public class CreationSystem : MonoBehaviour
             if(canPlace)
             {
                 towerTemp = Instantiate(tower, towerOnMouseTemp.transform.position, towerOnMouseTemp.transform.rotation);
-                towerTemp.GetComponent<Tower>().GetBlocks(red_block_count, blue_block_count, green_block_count);
-                Debug.Log(indicatorType + " from CreationSystem");
+                towerTemp.GetComponent<Tower>().SetBlocks(red_block_count, blue_block_count, green_block_count);
                 towerTemp.GetComponent<Tower>().SetIndicator(indicatorType);
                 towerTemp.GetComponent<Tower>().SetColor(color);
-                //towerTemp.getBlocks(red_block_count, blue_block_count, green_block_count);
                 Destroy(towerOnMouseTemp);
                 StartCoroutine(WaitForNextTowerCreation());
-                ClearCounts();
-                indicatorType = 0;
-                indicatorText.text = "Standart";
-                color = Color.white;
+                SetDefaults();
             } 
         } 
     }
@@ -207,6 +202,14 @@ public class CreationSystem : MonoBehaviour
     {
         towerOnMouseTemp = Instantiate(towerOnMouseObj);
         canPlace = true;
+    }
+    
+    public void SetDefaults()
+    {
+        ClearCounts();
+        indicatorType = 0;
+        indicatorText.text = "Standart";
+        color = Color.white;
     }
     
     private IEnumerator WaitForNextTowerCreation()
