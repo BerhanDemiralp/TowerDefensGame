@@ -8,13 +8,14 @@ using UnityEngine.UI;
 public class CreationSystem : MonoBehaviour
 {
     private bool isUIon = false;
-    private bool canPlace = false;
+    private bool canPlace;
 
     private int blue_block_count;
     private int green_block_count;
     private int red_block_count;
     private int indicatorType = 0;
     private int block_count = 0;
+    private int towerLevel = 1;
 
     private Color color = Color.white;
 
@@ -34,12 +35,15 @@ public class CreationSystem : MonoBehaviour
     public GameObject towerOnMouseObj;
     public GameObject tower;
 
+    public GameObject circle;
+    private SpriteRenderer circ;
+
     private GameObject towerOnMouseTemp;
     GameObject towerTemp;
 
     void Start()
     {
-        ClearCounts();
+        SetDefaults();
         indicatorType = 0;
         creationPanel.transform.position += new Vector3(0, -400, 0);
     }
@@ -47,26 +51,25 @@ public class CreationSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        blueBlockCount.text = blue_block_count.ToString();
-        greenBlockCount.text = green_block_count.ToString();
-        redBlockCount.text = red_block_count.ToString();
+        //Debug.Log("canPlace is " + canPlace);
 
-        Debug.Log(canPlace);
-
-        if (Input.GetMouseButtonDown(0))
+        if (canPlace && Input.GetMouseButtonDown(0))
         {
-            if(canPlace)
-            {
-                towerTemp = Instantiate(tower, towerOnMouseTemp.transform.position, towerOnMouseTemp.transform.rotation);
-                towerTemp.GetComponent<Tower>().SetBlocks(red_block_count, blue_block_count, green_block_count);
-                towerTemp.GetComponent<Tower>().SetIndicator(indicatorType);
-                towerTemp.GetComponent<Tower>().SetColor(color);
-                Destroy(towerOnMouseTemp);
-                StartCoroutine(WaitForNextTowerCreation());
-                SetDefaults();
-            } 
-        } 
+            CreateTower(red_block_count, blue_block_count, green_block_count, indicatorType, color);
+            Destroy(towerOnMouseTemp);
+            StartCoroutine(WaitForNextTowerCreation());
+            SetDefaults();
+        }
     }
+
+    public void CreateTower(int _redBlockCount, int _blueBlockCount, int _greenBlockCount, int _indicatorType, Color _color)
+    {
+        towerTemp = Instantiate(tower, towerOnMouseTemp.transform.position, towerOnMouseTemp.transform.rotation);
+        towerTemp.GetComponent<Tower>().SetLegos(_redBlockCount, _blueBlockCount, _greenBlockCount);
+        towerTemp.GetComponent<Tower>().SetIndicator(_indicatorType);
+        //towerTemp.GetComponent<Tower>().SetColor(_color);
+    }
+
     public void ChangeIndicator()
     {
         switch(indicatorType){
@@ -92,7 +95,7 @@ public class CreationSystem : MonoBehaviour
     private void ClearCounts()
     {
         blue_block_count= 0;
-        green_block_count= 0;
+        green_block_count= 6;
         red_block_count= 0;
     }
     private bool AddControl()
@@ -111,6 +114,7 @@ public class CreationSystem : MonoBehaviour
         if (AddControl())
         {
             blue_block_count++;
+            SetBlockTexts();
         }
     }
     public void AddGreenBlock()
@@ -118,6 +122,7 @@ public class CreationSystem : MonoBehaviour
         if (AddControl())
         {
             green_block_count++;
+            SetBlockTexts();
         }
     }
     public void AddRedBlock()
@@ -125,6 +130,7 @@ public class CreationSystem : MonoBehaviour
         if (AddControl())
         {
             red_block_count++;
+            SetBlockTexts();
         }
     }
     public void RemoveBlueBlock()
@@ -132,6 +138,7 @@ public class CreationSystem : MonoBehaviour
         if (RemoveControl(blue_block_count))
         {
             blue_block_count--;
+            SetBlockTexts();
         }
     }
     public void RemoveGreenBlock()
@@ -139,6 +146,7 @@ public class CreationSystem : MonoBehaviour
         if (RemoveControl(green_block_count))
         {
             green_block_count--;
+            SetBlockTexts();
         }
     }
     public void RemoveRedBlock()
@@ -146,28 +154,29 @@ public class CreationSystem : MonoBehaviour
         if (RemoveControl(red_block_count))
         {
             red_block_count--;
+            SetBlockTexts();
         }
     }
     public void AddBlocks()
     {block_count = blue_block_count + red_block_count + green_block_count;}
 
-    public void CreateTower()
+    public void CreateTowerButton()
     {
         if(!canPlace){
             AddBlocks();
             switch (block_count){
                 case LEVEL1:
-                    Debug.Log("Wow you have a Level 1 Tower!"); 
+                    towerLevel = 1;
                     CloseUI();
                     TowerOnMouse();
                     break;
                 case LEVEL2:
-                    Debug.Log("Wow you have a Level 2 Tower!");
+                    towerLevel = 2;
                     CloseUI();
                     TowerOnMouse();
                     break;
                 case LEVEL3:
-                    Debug.Log("Wow you have a Level 3 Tower!");
+                    towerLevel = 3;
                     CloseUI();
                     TowerOnMouse();
                     break;
@@ -185,7 +194,7 @@ public class CreationSystem : MonoBehaviour
         if(!isUIon && !canPlace){
             creationPanel.transform.position += new Vector3(0, 400, 0);
             isUIon = true;
-            Debug.Log("Opening UI!");
+            //Debug.Log("Opening UI!");
         }
     }
 
@@ -194,8 +203,15 @@ public class CreationSystem : MonoBehaviour
         if(isUIon && !canPlace){
             creationPanel.transform.position += new Vector3(0, -400, 0);
             isUIon = false;
-            Debug.Log("Closing UI!");
+            //Debug.Log("Closing UI!");
         }
+    }
+
+    private void SetBlockTexts()
+    {   
+        blueBlockCount.text = blue_block_count.ToString();
+        greenBlockCount.text = green_block_count.ToString();
+        redBlockCount.text = red_block_count.ToString();
     }
 
     public void TowerOnMouse()
@@ -203,10 +219,17 @@ public class CreationSystem : MonoBehaviour
         towerOnMouseTemp = Instantiate(towerOnMouseObj);
         canPlace = true;
     }
+
+    public void SetCanPlace(bool _canPlace)
+    {
+        canPlace = _canPlace;
+       // Debug.Log(canPlace);
+    }
     
     public void SetDefaults()
     {
         ClearCounts();
+        SetBlockTexts();
         indicatorType = 0;
         indicatorText.text = "Standart";
         color = Color.white;
@@ -216,7 +239,7 @@ public class CreationSystem : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         canPlace = false;
-    }    
+    }
 
 
     

@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     [Header("References")]
     
     public int maxEnemyCount = 10;
+    public int enemyHitPoints = 50;
     public float spawnCooldown = 3f;
     public int enemyCount = 0;
     public int enemyCountTemp = 0;
@@ -45,9 +46,9 @@ public class GameManager : MonoBehaviour
             MainRoadEnemy summonScript = summon.GetComponent<MainRoadEnemy>();
             enemyCount++;
             enemyCountTemp++;
-            summonScript.SetHitPoints(50f);
+            summonScript.SetHitPoints(enemyHitPoints);
             summonScript.SetCount(enemyCount);
-            Debug.Log("Enemy summoned with " + summonScript.hitPoints + "hit points!");
+            //Debug.Log("Enemy summoned with " + summonScript.hitPoints + "hit points!");
             timeUntilNextSpawn = 0;
         }
     }
