@@ -12,6 +12,7 @@ public class Movement : MonoBehaviour
     public Transform paths;
 
     private Tween tween;
+    private float speedTemp = 0;
     public List<Vector3> vectorList = new List<Vector3>();
     private bool slowed;
 
@@ -33,27 +34,28 @@ public class Movement : MonoBehaviour
             .SetSpeedBased()
             .SetEase(Ease.Linear)
             .SetLoops(-1, LoopType.Yoyo);
+        speedTemp = tween.timeScale;
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
+        /*if (Input.GetKeyDown(KeyCode.M))
         {
             SpeedDown();
         }
         else if (Input.GetKeyDown(KeyCode.N))
         {
             SpeedUp();
-        }
+        }*/
     }
 
-    void SpeedDown()
+    public void SetSpeed(float speedAmplifier)
     {
-        Debug.Log("SpeedUp");
-        tween.timeScale = tween.timeScale / 2;
+        Debug.Log("Speed was " + tween.timeScale);
+        tween.timeScale = speedTemp * speedAmplifier/100;
+        Debug.Log("Speed is " + tween.timeScale);
     }
-    void SpeedUp()
+    public void SetSpeedDefault()
     {
-        Debug.Log("SpeedDown");
-        tween.timeScale = tween.timeScale *2;
+        tween.timeScale = speedTemp ;
     }    
 }

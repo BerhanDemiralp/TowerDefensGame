@@ -8,7 +8,10 @@ public class MainRoadEnemy : MonoBehaviour
     [Header("Attributes")]
     [SerializeField] public float hitPoints = 100;
     [SerializeField] public float enemyCount = 0;
+    [SerializeField] private Movement movement;
 
+    private float _speed;
+    private float damageAmplifier = 0;
     private  GameObject gameManager;
     private GameManager gameManagerScript;
     
@@ -24,10 +27,15 @@ public class MainRoadEnemy : MonoBehaviour
         hitPoints = _hitPoints;
     }
 
+    public void SetCount(int _enemyCount)
+    {
+        enemyCount = _enemyCount;
+    }
+
     public void DealDamage(float damage)
     {
-        hitPoints -= damage;
-        Debug.Log("Current hp is " + damage);
+        hitPoints -= damage * damageAmplifier;
+        Debug.Log("Current hp is " + hitPoints);
         if(hitPoints <= 0)
         {
             gameManagerScript.enemyCountTemp--;
@@ -35,9 +43,30 @@ public class MainRoadEnemy : MonoBehaviour
         }
     }
 
-    public void SetCount(int _enemyCount)
+    public void SetSpeed(float _speedMultiplier, float _time)
     {
-        enemyCount = _enemyCount;
+        movement.speed = _speed;
+        StartCoroutine(SetSpeedDefault(_speedMultiplier,_time));
     }
+    public void SetDamageAmplifier(float _damageAmplifier, float _time)
+    {
+        StartCoroutine(DamageAmplifier(_damageAmplifier, _time));
+    }   
+
+    IEnumerator SetSpeedDefault(float _speedMultiplier,float _time)
+    {
+        movement.SetSpeed(_speedMultiplier);
+        yield return new WaitForSeconds(_time);
+        movement.SetSpeedDefault();
+    }
+
+    IEnumerator DamageAmplifier(float _damageAmplifier, float _time)
+    {
+        damageAmplifier = (100 + _damageAmplifier)/100;
+        yield return new WaitForSeconds(_time);
+        damageAmplifier = 1;
+    }
+
+    
     
 }

@@ -78,9 +78,12 @@ public class CreationSystem : MonoBehaviour
                 color = Color.black;
                 break;
             case 2:
-                indicatorText.text = "Dulandar";
+                indicatorText.text = "Shredder";
                 break;
             case 3:
+                indicatorText.text = "Plague";
+                break;
+            case 4:
                 indicatorText.text = "Standart";
                 color = Color.white;
                 indicatorType = -1;

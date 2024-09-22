@@ -1611,7 +1611,7 @@ MonoBehaviour:
   - {fileID: 7478460425901717817, guid: 8d003e441878c274090d9b93822a4440, type: 3}
   maxEnemyCount: 100
   enemyHitPoints: 100
-  spawnCooldown: 1
+  spawnCooldown: 10
   enemyCount: 0
   enemyCountTemp: 0
   blockCount: 30

@@ -45,6 +45,13 @@ public class Tower : MonoBehaviour
                 Gunner gunnerScript = gameObject.AddComponent<Gunner>();
                 gunnerScript.SetBlocks(redBlock, blueBlock, greenBlock);
                 break;
+            case 3:
+                //Shredder.
+                break;
+            case 4:
+                Plague plagueScript = gameObject.AddComponent<Plague>();
+                plagueScript.SetBlocks(redBlock, blueBlock, greenBlock);
+                break;
             default:
                 Standart standartScript = gameObject.AddComponent<Standart>();
                 standartScript.SetBlocks(redBlock, blueBlock, greenBlock);
