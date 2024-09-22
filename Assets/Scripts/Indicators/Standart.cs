@@ -35,9 +35,10 @@ public class Standart : MonoBehaviour
 
     private float timeUntilFire = 10;
 
+    private int redBlock;
     private int blueBlock;
     private int greenBlock;
-    private int redBlock;
+    
 
     void Start()
     {
@@ -127,8 +128,6 @@ public class Standart : MonoBehaviour
         
     }
     
-    
-
     public void BaseSetter()
     {
         SetBullet(BULLETNAME);

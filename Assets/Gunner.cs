@@ -36,9 +36,10 @@ public class Gunner : MonoBehaviour
 
     private float timeUntilFire = 10;
 
+    private int redBlock;
     private int blueBlock;
     private int greenBlock;
-    private int redBlock;
+
 
     void Start()
     {

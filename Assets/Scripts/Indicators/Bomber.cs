@@ -21,21 +21,30 @@ public class Bomber : MonoBehaviour
     
     
     [Header("Attribute")]
+    [SerializeField] protected int level = 1;
     [SerializeField] protected float damage = 0;
     [SerializeField] protected float attackSpeed = 2; 
     [SerializeField] protected float range = 5f;
     [SerializeField] protected float rotationSpeed = 500f;
     [SerializeField] protected bool canShoot = true;
 
+    public Tower creatorScript;
+
     protected Transform target;
     protected Quaternion targetRotation;
     protected SpriteRenderer this_SpriteRenderer;
 
     private float timeUntilFire = 10;
+    private bool isUpgraded = false;
+    private int totalBlockCount = 0;
+    private int killCount = 0;
+    private float damageUpgrade = 1.5f;
+    private float areaUpgrade = 1.8f;
 
+    private int redBlock;
     private int blueBlock;
     private int greenBlock;
-    private int redBlock;
+    
 
     void Start()
     {
@@ -77,8 +86,10 @@ public class Bomber : MonoBehaviour
         BomberBullet bulletScript = _bullet.GetComponent<BomberBullet>();
         bulletScript.SetTarget(target);
         bulletScript.SetCreator(gameObject);
-        bulletScript.SetDamage(damage);
-        Debug.Log("Bomber bullet shot!");
+        bulletScript.SetDamage(damage, blueBlock, greenBlock);
+        bulletScript.SetLevel(level);
+        if(isUpgraded){bulletScript.Upgrade(1.5f,1.8f); isUpgraded = false;}
+        killCount = 0;
     }    
 
     private void FindTarget()
@@ -114,7 +125,31 @@ public class Bomber : MonoBehaviour
         redBlock = redBlockTemp;
         blueBlock = blueBlockTemp;
         greenBlock = greenBlockTemp;
+        totalBlockCount = redBlock + blueBlock + greenBlock;
+        SetLevel();
         SetStats();
+    }
+
+    private void SetLevel()
+    {
+        switch(totalBlockCount)
+        {
+            case 6:
+                level = 1;
+                damageUpgrade = 1.4f;
+                areaUpgrade = 1.8f;
+                break;
+            case 12:
+                level = 2;
+                damageUpgrade = 1.4f + (redBlock * 16/240);
+                areaUpgrade = 1.8f + (redBlock * 12/240);
+                break;
+            case 24:
+                level = 3;
+                damageUpgrade = 1.4f + (redBlock * 16/240);
+                areaUpgrade = 1.8f + (redBlock * 12/240);
+                break;
+        }
     }
 
     private void SetStats()
@@ -130,6 +165,7 @@ public class Bomber : MonoBehaviour
     {
         SetBullet(BULLETNAME);
         SetColor(Color.red);
+        creatorScript = gameObject.GetComponent<Tower>();
         timeUntilFire = 10f;
         turretRotationPoint = gameObject.transform.GetChild(0);
         firingPoint = gameObject.transform.GetChild(0).GetChild(0).GetChild(0);
@@ -157,6 +193,19 @@ public class Bomber : MonoBehaviour
     {
         this_SpriteRenderer = GetComponent<SpriteRenderer>();
         this_SpriteRenderer.color = _color;
+    }
+    
+    public void IncreaseKillCount()
+    {
+        killCount++;
+        Debug.Log(killCount);
+        if(killCount >= 4){IsUpgraded(); killCount = 0;}
+    }
+
+    public void IsUpgraded()
+    {
+        isUpgraded = true;
+        Debug.Log("isUpgraded = true");
     }
 
 }

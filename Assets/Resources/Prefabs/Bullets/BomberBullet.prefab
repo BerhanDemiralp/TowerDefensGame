@@ -101,8 +101,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 611574288477988590}
   AoE: {fileID: 5416885167903228043, guid: 397e1fa4ff019804fb46c5ccc89d86ff, type: 3}
-  speed: 7
+  speed: 5
   rotationSpeed: 300
+  creatorScript: {fileID: 0}
   damage: 0
 --- !u!61 &6010033177643425534
 BoxCollider2D:

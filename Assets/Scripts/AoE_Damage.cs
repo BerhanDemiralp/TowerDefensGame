@@ -5,29 +5,40 @@ using UnityEngine;
 
 public class AoE_Damage : MonoBehaviour
 {
+    [Header("Refences")]
+    [SerializeField] private GameObject fireCrackerSpawner;
+    
     [Header("Attributes")]
     [SerializeField] private float damage = 0;
+    [SerializeField] private float FirecrackerDamage = 0;
     [SerializeField] private float areaRadius = 5;
+
+    public GameObject creator;
+    public BomberBullet creatorScript;
+    private int blueBlock = 0;
+    private int killCount = 0;
+    private int level = 1;
     
-    
+    private GameObject FcSpawner;
+    private firecrackerSpawner FcSpawnerScript;
     private float timeUntilDestroy = 0f;
+    private Bomber bomber;
 
-    
-    
-    
 
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
     void Update()
     {
         timeUntilDestroy += Time.deltaTime;
         transform.localScale += new UnityEngine.Vector3(areaRadius * Time.deltaTime, areaRadius * Time.deltaTime, 0);
 
+        if(killCount >= 3)
+        {
+            UpgradeNextShot();
+            Debug.Log("Upgrade signal sent!");
+        }
+        
         if(timeUntilDestroy >= 0.25f)
         {
+            if(level == 3){ScSpawner();}
             Destroy(gameObject);
         }
     }
@@ -36,16 +47,63 @@ public class AoE_Damage : MonoBehaviour
     {
         if(other.gameObject.tag == "MainRoadEnemy" || other.gameObject.tag == "SideRoadEnemy")
         {
-        MainRoadEnemy targerScript = other.GetComponent<MainRoadEnemy>();
-        targerScript.DealDamage(damage);
-        Debug.Log(damage + " damage dealt!");
+            MainRoadEnemy targerScript = other.GetComponent<MainRoadEnemy>();
+            targerScript.DealDamage(damage);
+            if(targerScript.hitPoints <=0){UpgradeNextShot(); Debug.Log(killCount);}
+            Debug.Log(damage + " damage dealt!");
         }
-             
     }
 
-    public void SetDamage(float _damage)
+    public void SetDamage(float _damage, int _bluBlock)
     {
         damage = _damage;
+        blueBlock = _bluBlock;
     }
+
+    public void SetAreaRadius(float _areaRadius)
+    {
+        areaRadius = _areaRadius;
+    }
+
+    public void SetFromTower(GameObject tower)
+    {
+        creator = tower;
+        bomber = tower.GetComponent<Bomber>();
+    }
+
+    public void SetFirecrackerDamage(float _damage)
+    {
+        FirecrackerDamage = _damage;
+    }
+
+    public void SetLevel(int _level)
+    {
+        level = _level;
+    }
+
+    public void UpgradeNextShot()
+    {
+        bomber.IsUpgraded();
+    }
+
+
+    private void ScSpawner()
+    {
+        FcSpawner = Instantiate(fireCrackerSpawner, transform.position, transform.rotation);
+        FcSpawnerScript = FcSpawner.GetComponent<firecrackerSpawner>();
+        FcSpawnerScript.SetDamage(damage, blueBlock);
+        FcSpawnerScript.SetCreator(creator);
+        FcSpawnerScript.SetAreaRadius(areaRadius);
+    }
+
+    private void SetCreator(GameObject _creator)
+    {
+        creatorScript = _creator.GetComponent<BomberBullet>();
+    }
+
+    
+    
+
+    
     
 }

@@ -44,7 +44,7 @@ public class TowerImageOnMouse : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D col)
     {
-        Debug.Log("oncoll");
+        Debug.Log("stay");
         if (col.collider.CompareTag("Tower") || col.collider.CompareTag("Road"))
         {
             cs.SetCanPlace(false);
@@ -52,7 +52,7 @@ public class TowerImageOnMouse : MonoBehaviour
     }
     private void OnCollisionExit2D(Collision2D col)
     {
-        Debug.Log("exitcoll");
+        Debug.Log("exit");
 
         if (col.collider.CompareTag("Tower") || col.collider.CompareTag("Road"))
         {

@@ -8,6 +8,7 @@ using Unity.IO.LowLevel.Unsafe;
 using System.Diagnostics.Tracing;
 using System.Diagnostics;
 using Unity.VisualScripting;
+using Debug = UnityEngine.Debug;
 
 public class Tower : MonoBehaviour
 {
@@ -17,16 +18,12 @@ public class Tower : MonoBehaviour
     [SerializeField] private int redBlock;
 
     protected Transform target;
+    private Transform barrel;
     protected Quaternion targetRotation;
     protected SpriteRenderer this_SpriteRenderer;
 
 
-    private string indicator;
-
-    private void Start()
-    {
-        //gameObject.AddComponent<Standart>();
-    }
+    private int indicator;
 
     public void SetLegos(int red, int blue, int green)
     {
@@ -37,6 +34,7 @@ public class Tower : MonoBehaviour
 
     public void SetIndicator(int _indicator)
     {
+        indicator = _indicator;
         switch(_indicator){
             case 1:
                 Bomber BomberScript = gameObject.AddComponent<Bomber>();
@@ -50,6 +48,20 @@ public class Tower : MonoBehaviour
                 Standart standartScript = gameObject.AddComponent<Standart>();
                 standartScript.SetBlocks(redBlock, blueBlock, greenBlock);
                 break;
+        }
+    }
+
+    public int GetBlocks(int BlockNumber)
+    {
+        switch(BlockNumber){
+            case 0:
+                return redBlock;
+            case 1:
+                return blueBlock;
+            case 2:
+                return greenBlock;
+            default:
+                return 999;
         }
     }
 

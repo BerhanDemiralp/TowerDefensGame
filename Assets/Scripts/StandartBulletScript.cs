@@ -41,8 +41,6 @@ public class StandartBullet : MonoBehaviour
         RotateTowardsTarget();
         Vector2 direction = (target.position - transform.position).normalized;
         rb.velocity = direction * speed;
-
-        
     }
 
     public void SetTarget(Transform _target)

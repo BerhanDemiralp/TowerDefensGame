@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -34,10 +35,6 @@ public class CreationSystem : MonoBehaviour
     public GameObject creationPanel;
     public GameObject towerOnMouseObj;
     public GameObject tower;
-
-    public GameObject circle;
-    private SpriteRenderer circ;
-
     private GameObject towerOnMouseTemp;
     GameObject towerTemp;
 
@@ -133,6 +130,12 @@ public class CreationSystem : MonoBehaviour
             SetBlockTexts();
         }
     }
+
+    public void OnPointerDown(PointerEventData data)
+    {
+        Debug.Log("OnPointerDown called.");
+    }
+
     public void RemoveBlueBlock()
     {
         if (RemoveControl(blue_block_count))
@@ -194,7 +197,6 @@ public class CreationSystem : MonoBehaviour
         if(!isUIon && !canPlace){
             creationPanel.transform.position += new Vector3(0, 400, 0);
             isUIon = true;
-            //Debug.Log("Opening UI!");
         }
     }
 
@@ -203,7 +205,6 @@ public class CreationSystem : MonoBehaviour
         if(isUIon && !canPlace){
             creationPanel.transform.position += new Vector3(0, -400, 0);
             isUIon = false;
-            //Debug.Log("Closing UI!");
         }
     }
 
@@ -223,7 +224,6 @@ public class CreationSystem : MonoBehaviour
     public void SetCanPlace(bool _canPlace)
     {
         canPlace = _canPlace;
-       // Debug.Log(canPlace);
     }
     
     public void SetDefaults()
