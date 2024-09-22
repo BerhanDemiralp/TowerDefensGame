@@ -24,7 +24,7 @@ public class Standart : MonoBehaviour
     
     [Header("Attribute")]
     [SerializeField] protected float damage = 0;
-    [SerializeField] protected float attackSpeed = 2; 
+    [SerializeField] protected float attackSpeed = 2;
     [SerializeField] protected float range = 5f;
     [SerializeField] protected float rotationSpeed = 500f;
     [SerializeField] protected bool canShoot = true;
@@ -33,8 +33,11 @@ public class Standart : MonoBehaviour
     protected Quaternion targetRotation;
     protected SpriteRenderer this_SpriteRenderer;
 
+    
     private float timeUntilFire = 10;
 
+    private int level = 1;
+    private int totalBlockCount = 0;
     private int redBlock;
     private int blueBlock;
     private int greenBlock;
@@ -116,7 +119,9 @@ public class Standart : MonoBehaviour
         redBlock = redBlockTemp;
         blueBlock = blueBlockTemp;
         greenBlock = greenBlockTemp;
+        totalBlockCount = redBlock + blueBlock + greenBlock;
         SetStats();
+        SetLevel();
     }
 
     private void SetStats()
@@ -126,6 +131,21 @@ public class Standart : MonoBehaviour
         range = 2 + (greenBlock * 0.22f);
         Debug.Log(damage + " - " + attackSpeed + " - " + range);
         
+    }
+
+    private void SetLevel()
+    {
+        switch(totalBlockCount){
+            case 6:
+                level = 1;
+                break;
+            case 12:
+                level = 2;
+                break;
+            case 24:
+                level = 3;
+                break;
+        }
     }
     
     public void BaseSetter()

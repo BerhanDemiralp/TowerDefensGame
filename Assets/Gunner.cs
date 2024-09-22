@@ -36,6 +36,7 @@ public class Gunner : MonoBehaviour
 
     private float timeUntilFire = 10;
 
+    private int level = 0;
     private int redBlock;
     private int blueBlock;
     private int greenBlock;
@@ -82,6 +83,7 @@ public class Gunner : MonoBehaviour
         bulletScript.SetTarget(target);
         bulletScript.SetCreator(gameObject);
         bulletScript.SetDamage(damage);
+        bulletScript.SetLevel(level);
         Debug.Log("Gunner bullet shot!");
     }
 

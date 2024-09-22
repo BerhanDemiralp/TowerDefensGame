@@ -13,9 +13,10 @@ using Debug = UnityEngine.Debug;
 public class Tower : MonoBehaviour
 {
     [Header("Legos")] 
+    [SerializeField] private int redBlock;
     [SerializeField] private int blueBlock;
     [SerializeField] private int greenBlock;
-    [SerializeField] private int redBlock;
+    
 
     protected Transform target;
     private Transform barrel;

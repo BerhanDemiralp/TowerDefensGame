@@ -18,12 +18,16 @@ public class GunnerBullet : MonoBehaviour
     [SerializeField] private float maxTarget = 3f;
     [SerializeField] private float targetCount = 0f;
 
+
     private Transform target;
     private GameObject creator;
     private GameObject currentTarget;
 
     public float damage = 0f;
-
+    private int level = 0;
+    private int redBlock = 0;
+    private int blueBlock = 0;
+    private int greenBlock = 0;
     private float damageTemp = 0f;
 
     // Start is called before the first frame update
@@ -89,7 +93,20 @@ public class GunnerBullet : MonoBehaviour
             {
                 currentTarget = other.gameObject;
                 MainRoadEnemy targetScript = other.GetComponent<MainRoadEnemy>();
+                switch(level)
+                {
+                    case 1:
+                        damage -= targetScript.hitPoints;
+                        break;
+                    case 2:
+                        damage -= targetScript.hitPoints + 20f;
+                        break;
+                    case 3:
+                        damage -= targetScript.hitPoints*3/4 + 20f;
+                        break;
+                }
                 damage -= targetScript.hitPoints;
+                
                 targetScript.DealDamage(damageTemp);
                 damageTemp = damage;
                 targetCount++;
@@ -98,7 +115,6 @@ public class GunnerBullet : MonoBehaviour
                 Debug.Log(damage + " damage dealt!");
                 Debug.Log("Remaining damage is " + damage);
             }
-            
         }
     }
 
@@ -111,6 +127,17 @@ public class GunnerBullet : MonoBehaviour
     {
         damage = _damage;
         damageTemp = _damage;
+    }
+    
+    public void SetLevel(int _level){
+        level = _level;
+    }
+
+    public void SetLegos(int red, int blue, int green)
+    {
+        redBlock = red;
+        blueBlock = blue;
+        greenBlock = green;
     }
 
 

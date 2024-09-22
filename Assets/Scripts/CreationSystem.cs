@@ -64,7 +64,6 @@ public class CreationSystem : MonoBehaviour
         towerTemp = Instantiate(tower, towerOnMouseTemp.transform.position, towerOnMouseTemp.transform.rotation);
         towerTemp.GetComponent<Tower>().SetLegos(_redBlockCount, _blueBlockCount, _greenBlockCount);
         towerTemp.GetComponent<Tower>().SetIndicator(_indicatorType);
-        //towerTemp.GetComponent<Tower>().SetColor(_color);
     }
 
     public void ChangeIndicator()
