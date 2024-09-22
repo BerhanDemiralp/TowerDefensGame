@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -15,7 +16,7 @@ public class GunnerBullet : MonoBehaviour
     [SerializeField] private float speed = 3f;
     [SerializeField] private float rotationSpeed = 300f;
     [SerializeField] private float range = 0.5f;
-    [SerializeField] private float maxTarget = 3f;
+    [SerializeField] private float maxTarget = 2f;
     [SerializeField] private float targetCount = 0f;
 
 
@@ -93,24 +94,12 @@ public class GunnerBullet : MonoBehaviour
             {
                 currentTarget = other.gameObject;
                 MainRoadEnemy targetScript = other.GetComponent<MainRoadEnemy>();
-                switch(level)
-                {
-                    case 1:
-                        damage -= targetScript.hitPoints;
-                        break;
-                    case 2:
-                        damage -= targetScript.hitPoints + 20f;
-                        break;
-                    case 3:
-                        damage -= targetScript.hitPoints*3/4 + 20f;
-                        break;
-                }
-                damage -= targetScript.hitPoints;
-                
+                if(level == 3){damage -= targetScript.hitPoints*3/4;}else{damage -= targetScript.hitPoints;}
                 targetScript.DealDamage(damageTemp);
                 damageTemp = damage;
                 targetCount++;
                 if(targetCount == maxTarget || damage <= 0){Destroy(gameObject);}
+                if(level >= 2){damage += 20f;}
                 FindTarget();
                 Debug.Log(damage + " damage dealt!");
                 Debug.Log("Remaining damage is " + damage);
@@ -138,9 +127,9 @@ public class GunnerBullet : MonoBehaviour
         redBlock = red;
         blueBlock = blue;
         greenBlock = green;
+        maxTarget = (float)(2 + Math.Round(blueBlock / 6f));
+        range = 1.2f + (greenBlock * 12/240);
     }
-
-
 
 
     public void ANIR()

@@ -84,6 +84,7 @@ public class Gunner : MonoBehaviour
         bulletScript.SetCreator(gameObject);
         bulletScript.SetDamage(damage);
         bulletScript.SetLevel(level);
+        bulletScript.SetLegos(redBlock, blueBlock, greenBlock);
         Debug.Log("Gunner bullet shot!");
     }
 
