@@ -7,12 +7,14 @@ using UnityEngine;
 public class TowerImageOnMouse : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameObject creationSystem;
+    //[SerializeField] private GameObject creationSystem;
+
+    public bool canPlace;
 
     UnityEngine.Vector3 mouseWorldPos;
     TagAttribute TagAttribute;
 
-    private CreationSystem cs;
+    //private CreationSystem cs;
 
     // Update is called once per frame
     void Update()
@@ -20,7 +22,7 @@ public class TowerImageOnMouse : MonoBehaviour
         mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mouseWorldPos.z = 0f; // zero z
         transform.position = mouseWorldPos;
-        cs = creationSystem.GetComponent<CreationSystem>();
+        //cs = creationSystem.GetComponent<CreationSystem>();
     }
 
     
@@ -47,7 +49,7 @@ public class TowerImageOnMouse : MonoBehaviour
         Debug.Log("stay");
         if (col.collider.CompareTag("Tower") || col.collider.CompareTag("Road"))
         {
-            cs.SetCanPlace(false);
+            canPlace = false;
         }
     }
     private void OnCollisionExit2D(Collision2D col)
@@ -56,9 +58,7 @@ public class TowerImageOnMouse : MonoBehaviour
 
         if (col.collider.CompareTag("Tower") || col.collider.CompareTag("Road"))
         {
-            cs.SetCanPlace(true);
+            canPlace= true;
         }
-
-    
     }
 }

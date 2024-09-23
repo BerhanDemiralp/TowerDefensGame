@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class CreationSystem : MonoBehaviour
 {
     private bool isUIon = false;
+    private bool onCreation = false;
     private bool canPlace;
 
     private int blue_block_count;
@@ -49,13 +50,23 @@ public class CreationSystem : MonoBehaviour
     void Update()
     {
         //Debug.Log("canPlace is " + canPlace);
-
-        if (canPlace && Input.GetMouseButtonDown(0))
+        if (onCreation && Input.GetMouseButtonDown(0))
         {
-            CreateTower(red_block_count, blue_block_count, green_block_count, indicatorType, color);
-            Destroy(towerOnMouseTemp);
-            StartCoroutine(WaitForNextTowerCreation());
-            SetDefaults();
+            canPlace = towerOnMouseTemp.GetComponent<TowerImageOnMouse>().canPlace;
+            if (canPlace)
+            {
+                CreateTower(red_block_count, blue_block_count, green_block_count, indicatorType, color);
+                Destroy(towerOnMouseTemp);
+                StartCoroutine(WaitForNextTowerCreation());
+                SetDefaults();
+            }
+            else
+            {
+                Destroy(towerOnMouseTemp);
+                StartCoroutine(WaitForNextTowerCreation());
+                SetDefaults();
+            }
+            onCreation= false;
         }
     }
 
@@ -167,7 +178,7 @@ public class CreationSystem : MonoBehaviour
 
     public void CreateTowerButton()
     {
-        if(!canPlace){
+        if(!onCreation){
             AddBlocks();
             switch (block_count){
                 case LEVEL1:
@@ -196,7 +207,7 @@ public class CreationSystem : MonoBehaviour
 
     public void OpenUI()
     {
-        if(!isUIon && !canPlace){
+        if(!isUIon){
             creationPanel.transform.position += new Vector3(0, 400, 0);
             isUIon = true;
         }
@@ -204,7 +215,7 @@ public class CreationSystem : MonoBehaviour
 
     public void CloseUI()
     {
-        if(isUIon && !canPlace){
+        if(isUIon){
             creationPanel.transform.position += new Vector3(0, -400, 0);
             isUIon = false;
         }
@@ -220,7 +231,7 @@ public class CreationSystem : MonoBehaviour
     public void TowerOnMouse()
     {
         towerOnMouseTemp = Instantiate(towerOnMouseObj);
-        canPlace = true;
+        onCreation = true;
     }
 
     public void SetCanPlace(bool _canPlace)
