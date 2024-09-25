@@ -29,7 +29,7 @@ public class TowerImageOnMouse : MonoBehaviour
         Debug.Log("stay");
         if (col.collider.CompareTag("Tower") || col.collider.CompareTag("Road"))
         {
-            isColliding = false;
+            isColliding = true;
         }
     }
     private void OnCollisionExit2D(Collision2D col)
@@ -38,7 +38,7 @@ public class TowerImageOnMouse : MonoBehaviour
 
         if (col.collider.CompareTag("Tower") || col.collider.CompareTag("Road"))
         {
-            isColliding= true;
+            isColliding= false;
         }
     }
 }

@@ -159,6 +159,7 @@ GameObject:
   - component: {fileID: 853133879219190715}
   - component: {fileID: 3193736232019025670}
   - component: {fileID: 3685806250313502909}
+  - component: {fileID: 504341126388170325}
   m_Layer: 0
   m_Name: Tower
   m_TagString: Tower
@@ -246,6 +247,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b255407e71082f84da442b826d93d7c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  redBlock: 0
   blueBlock: 0
   greenBlock: 0
-  redBlock: 0
+--- !u!58 &504341126388170325
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6050851506018446526}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.13168193}
+  serializedVersion: 2
+  m_Radius: 0.6481422

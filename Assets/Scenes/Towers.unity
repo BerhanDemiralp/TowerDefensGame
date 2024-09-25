@@ -1956,6 +1956,7 @@ MonoBehaviour:
   sideRoadEnemies:
   - {fileID: 7478460425901717817, guid: 621589a672d21de44976840bde00c833, type: 3}
   healthText: {fileID: 0}
+  blockCountText: {fileID: 0}
   maxEnemyCount: 100
   enemyHitPoints: 100
   spawnCooldown: 2
@@ -4775,7 +4776,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1033211406636710845, guid: e6ff7c9a36506d24abbb08aa21870f55, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2101833551}
   m_SourcePrefab: {fileID: 100100000, guid: e6ff7c9a36506d24abbb08aa21870f55, type: 3}
 --- !u!1 &1783233784
 GameObject:
@@ -5509,6 +5513,65 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2036602973}
   m_CullTransparentMesh: 1
+--- !u!1 &2101833548 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1033211406636710845, guid: e6ff7c9a36506d24abbb08aa21870f55, type: 3}
+  m_PrefabInstance: {fileID: 1769630946}
+  m_PrefabAsset: {fileID: 0}
+--- !u!60 &2101833551
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101833548}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 6.523923, y: -1.3419902}
+      - {x: 5.7289295, y: 3.8571274}
+      - {x: 4.9627013, y: 6.1209188}
+      - {x: 2.5289621, y: 5.9287095}
+      - {x: 1.0037595, y: 1.1336484}
+      - {x: -0.95105654, y: 0.30901697}
+      - {x: -0.6431632, y: -1.1228297}
+      - {x: 2.230689, y: -1.0489914}
+      - {x: 3.7938335, y: 4.2593684}
+  m_UseDelaunayMesh: 0
 --- !u!1001 &6528921658647313388
 PrefabInstance:
   m_ObjectHideFlags: 0

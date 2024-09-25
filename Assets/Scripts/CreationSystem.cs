@@ -15,6 +15,7 @@ public class CreationSystem : MonoBehaviour
 
     private bool isUIon = false;
     private bool canPlace;
+    private bool isColliding = false;
 
     private int blue_block_count;
     private int green_block_count;
@@ -54,13 +55,31 @@ public class CreationSystem : MonoBehaviour
     void Update()
     {
         //Debug.Log("canPlace is " + canPlace);
-
-        if (canPlace && Input.GetMouseButtonDown(0))
+        
+        /*if (canPlace && Input.GetMouseButtonDown(0))
         {
             CreateTower(red_block_count, blue_block_count, green_block_count, indicatorType, color);
             Destroy(towerOnMouseTemp);
             StartCoroutine(WaitForNextTowerCreation());
             SetDefaults();
+        }*/
+
+        if (canPlace && Input.GetMouseButtonDown(0))
+        {
+            isColliding = towerOnMouseTemp.GetComponent<TowerImageOnMouse>().isColliding;
+            if (!isColliding)
+            {
+                CreateTower(red_block_count, blue_block_count, green_block_count, indicatorType, color);
+                Destroy(towerOnMouseTemp);
+                StartCoroutine(WaitForNextTowerCreation());
+                SetDefaults();
+                canPlace= false;
+            }
+            else
+            {
+                
+            }
+            
         }
     }
 

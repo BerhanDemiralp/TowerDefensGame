@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     public int enemyCount = 0;
     public int enemyCountTemp = 0;
 
-    public int blockCount = 7;
+    public int blockCount = 70;
     public int PlayerHp = 10;
 
     public bool timeStopped = false;
