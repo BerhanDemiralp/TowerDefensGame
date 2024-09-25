@@ -1,20 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CreationSystem : MonoBehaviour
 {
+    private GameManager gameManager;
+    private GameObject[] allEnemies;
+    private GameObject[] allTowers;
+
     private bool isUIon = false;
-    private bool canPlace = false;
+    private bool canPlace;
 
     private int blue_block_count;
     private int green_block_count;
     private int red_block_count;
     private int indicatorType = 0;
     private int block_count = 0;
+    private int towerLevel = 1;
+
+    private Color color = Color.white;
 
     //Her kule seviyesi için gerekli lego sayıları
     private const int LEVEL1 = 6;
@@ -31,140 +40,158 @@ public class CreationSystem : MonoBehaviour
     public GameObject creationPanel;
     public GameObject towerOnMouseObj;
     public GameObject tower;
-
     private GameObject towerOnMouseTemp;
+    private GameObject towerTemp;
 
     void Start()
     {
-        clearCounts();
+        SetDefaults();
+        indicatorType = 0;
         creationPanel.transform.position += new Vector3(0, -400, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        blueBlockCount.text = blue_block_count.ToString();
-        greenBlockCount.text = green_block_count.ToString();
-        redBlockCount.text = red_block_count.ToString();
+        //Debug.Log("canPlace is " + canPlace);
 
-        if (Input.GetMouseButtonDown(0))
+        if (canPlace && Input.GetMouseButtonDown(0))
         {
-            if(canPlace)
-            {
-                Instantiate(tower, towerOnMouseTemp.transform.position, towerOnMouseTemp.transform.rotation);
-                Destroy(towerOnMouseTemp);
-                canPlace = false;
-            }       
-        } 
+            CreateTower(red_block_count, blue_block_count, green_block_count, indicatorType, color);
+            Destroy(towerOnMouseTemp);
+            StartCoroutine(WaitForNextTowerCreation());
+            SetDefaults();
+        }
     }
 
-    private void clearCounts()
+    public void CreateTower(int _redBlockCount, int _blueBlockCount, int _greenBlockCount, int _indicatorType, Color _color)
+    {
+        towerTemp = Instantiate(tower, towerOnMouseTemp.transform.position, towerOnMouseTemp.transform.rotation);
+        towerTemp.GetComponent<Tower>().SetLegos(_redBlockCount, _blueBlockCount, _greenBlockCount);
+        towerTemp.GetComponent<Tower>().SetIndicator(_indicatorType);
+    }
+
+    public void ChangeIndicator()
+    {
+        switch(indicatorType){
+            case 0:
+                indicatorText.text = "Bomber";
+                color = Color.red;
+                break;
+            case 1:
+                indicatorText.text = "Gunner";
+                color = Color.black;
+                break;
+            case 2:
+                indicatorText.text = "Shredder";
+                break;
+            case 3:
+                indicatorText.text = "Plague";
+                break;
+            case 4:
+                indicatorText.text = "Standart";
+                color = Color.white;
+                indicatorType = -1;
+                break;
+        }
+        indicatorType++;
+    }
+    private void ClearCounts()
     {
         blue_block_count= 0;
         green_block_count= 0;
         red_block_count= 0;
     }
-    private bool addControl()
+    private bool AddControl()
     {
-        addBlocks();
-        if (block_count == LEVEL3) { return false; }
+        AddBlocks();
+        if(gameManager.blockCount <= 0){return false;}
+        if (block_count == LEVEL3) {return false;}
         return true;
     }
-
-    public void changeIndicator()
-    {
-        switch(indicatorType){
-            case 0:
-                indicatorText.text = "Vasirus";
-                break;
-            case 1:
-                indicatorText.text = "Kerdar";
-                break;
-            case 2:
-                indicatorText.text = "Dulandar";
-                break;
-            case 3:
-                indicatorText.text = "Jalahun";
-                indicatorType = 0;
-                break;
-        }
-        indicatorType++;
-    }
-    private bool removeControl(int block_count)
+    private bool RemoveControl(int block_count)
     {
         if (block_count == 0) { return false; }
         return true;
     }
-    public void addBlueBlock()
+
+    public void AddRedBlock()
     {
-        if (addControl())
+        if (AddControl())
         {
-            Debug.Log("Blue");
-            blue_block_count++;
-            
-        }
-    }
-    public void addGreenBlock()
-    {
-        if (addControl())
-        {
-            Debug.Log("Green");
-            green_block_count++;
-            
-        }
-    }
-    public void addRedBlock()
-    {
-        if (addControl())
-        {
-            Debug.Log("Red");
             red_block_count++;
-            
+            gameManager.RemoveLego(1);
+            SetBlockTexts();
         }
     }
-    public void removeBlueBlock()
+    public void AddBlueBlock()
     {
-        if (removeControl(blue_block_count))
+        if (AddControl())
+        {
+            blue_block_count++;
+            gameManager.RemoveLego(1);
+            SetBlockTexts();
+        }
+    }
+    public void AddGreenBlock()
+    {
+        if (AddControl())
+        {
+            green_block_count++;
+            gameManager.RemoveLego(1);
+            SetBlockTexts();
+        }
+    }
+
+    public void RemoveBlueBlock()
+    {
+        if (RemoveControl(blue_block_count))
         {
             blue_block_count--;
+            gameManager.AddLego(1);
+            SetBlockTexts();
         }
     }
-    public void removeGreenBlock()
+    public void RemoveGreenBlock()
     {
-        if (removeControl(green_block_count))
+        if (RemoveControl(green_block_count))
         {
             green_block_count--;
+            gameManager.AddLego(1);
+            SetBlockTexts();
         }
     }
-    public void removeRedBlock()
+    public void RemoveRedBlock()
     {
-        if (removeControl(red_block_count))
+        if (RemoveControl(red_block_count))
         {
             red_block_count--;
+            gameManager.AddLego(1);
+            SetBlockTexts();
         }
     }
-    public void addBlocks()
+    public void AddBlocks()
     {block_count = blue_block_count + red_block_count + green_block_count;}
 
-    public void createTower()
+    public void CreateTowerButton()
     {
         if(!canPlace){
-            addBlocks();
+            AddBlocks();
             switch (block_count){
                 case LEVEL1:
-                    Debug.Log("Wow you have a Level 1 Tower!"); 
-                    closeUI();
-                    towerOnMouse();
+                    towerLevel = 1;
+                    CloseUI();
+                    TowerOnMouse();
                     break;
                 case LEVEL2:
-                    Debug.Log("Wow you have a Level 2 Tower!");
-                    closeUI();
-                    towerOnMouse();
+                    towerLevel = 2;
+                    CloseUI();
+                    TowerOnMouse();
                     break;
                 case LEVEL3:
-                    Debug.Log("Wow you have a Level 3 Tower!");
-                    closeUI();
-                    towerOnMouse();
+                    towerLevel = 3;
+                    CloseUI();
+                    TowerOnMouse();
                     break;
                 default:
                     Debug.Log("Towers must have 6, 12 or 24 blocks!");
@@ -175,40 +202,109 @@ public class CreationSystem : MonoBehaviour
         
     }
 
-    public void openUI()
+    public void OpenUI()
     {
         if(!isUIon && !canPlace){
             creationPanel.transform.position += new Vector3(0, 400, 0);
+            StopTime();
             isUIon = true;
-            Debug.Log("Opening UI!");
         }
     }
 
-    public void closeUI()
+    public void CloseUI()
     {
         if(isUIon && !canPlace){
             creationPanel.transform.position += new Vector3(0, -400, 0);
+            StartTime();
             isUIon = false;
-            Debug.Log("Closing UI!");
         }
     }
 
-    public void towerOnMouse()
+    private void SetBlockTexts()
+    {   
+        blueBlockCount.text = blue_block_count.ToString();
+        greenBlockCount.text = green_block_count.ToString();
+        redBlockCount.text = red_block_count.ToString();
+    }
+
+    public void TowerOnMouse()
     {
         towerOnMouseTemp = Instantiate(towerOnMouseObj);
         canPlace = true;
     }
-
-
-    /*private void MouseDownEvent()
+    
+    public void SetDefaults()
     {
-        if(canPlace)
+        ClearCounts();
+        SetBlockTexts();
+        indicatorType = 0;
+        indicatorText.text = "Standart";
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        color = Color.white;
+    }
+
+    public void StopTime()
+    {
+        gameManager.GetComponent<GameManager>().StopTime();
+        StopTimeForEnemies();
+        StopTimeForTowers();
+    }
+
+    public void StartTime()
+    {
+        gameManager.GetComponent<GameManager>().StartTime();
+        StartTimeForEnemies();
+        StartTimeTowers();
+    }
+
+    public void StopTimeForEnemies()
+    {
+        allEnemies = null;
+        var mainRoadEnemies = GameObject.FindGameObjectsWithTag("MainRoadEnemy");
+        var sideRoadEnemies = GameObject.FindGameObjectsWithTag("SideRoadEnemy");
+        allEnemies = mainRoadEnemies.Concat(sideRoadEnemies).ToArray();
+        foreach (GameObject gameObject in allEnemies)
         {
-            Instantiate(tower, towerOnMouseTemp.transform.position, towerOnMouseTemp.transform.rotation);
-            Destroy(towerOnMouseTemp);
-            canPlace = false;
+            gameObject.GetComponent<Movement>().StopTime();
+            
         }
-    }*/
+    }
+
+    public void StartTimeForEnemies()
+    {
+        foreach (GameObject gameObject in allEnemies)
+        {
+            gameObject.GetComponent<Movement>().StartTime();
+        }
+    }
+    
+    public void StopTimeForTowers()
+    {
+        allTowers = null;
+        allTowers = GameObject.FindGameObjectsWithTag("Tower");
+        foreach (GameObject gameObject in allTowers)
+        {
+            gameObject.GetComponent<Tower>().StopTime();
+            
+        }
+    }
+
+    public void StartTimeTowers()
+    {
+        foreach (GameObject gameObject in allTowers)
+        {
+            gameObject.GetComponent<Tower>().StartTime();
+        }
+    }
+
+    private IEnumerator WaitForNextTowerCreation()
+    {
+        yield return new WaitForSeconds(0.1f);
+        canPlace = false;
+    }
+
+
+    
     
 
 

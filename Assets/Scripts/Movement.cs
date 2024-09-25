@@ -5,50 +5,82 @@ using DG.Tweening;
 
 public class Movement : MonoBehaviour
 {
+    public GameObject road;
+    private GameManager gameManager;
     public Transform target;
     public float speed = 3f;
     public Transform paths;
 
     private Tween tween;
+    private float defaultSpeed = 0;
+    private float speedTemp = 0;
     public List<Vector3> vectorList = new List<Vector3>();
     private bool slowed;
 
     void Start()
     {
-        vectorList = new List<Vector3>(); // Liste çevirilme amacý anlýk olarak vectore ekleme çýkarma yapabilme
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        target = transform;
+        
+        if(gameObject.tag == "MainRoadEnemy"){road = GameObject.Find("Path");paths = GameObject.Find("Path").transform;}
+        if(gameObject.tag == "SideRoadEnemy"){road = GameObject.Find("SidePath");paths = GameObject.Find("SidePath").transform;}
+
+        vectorList = new List<Vector3>(); // Liste ï¿½evirilme amacï¿½ anlï¿½k olarak vectore ekleme ï¿½ï¿½karma yapabilme
 
         foreach (Transform path in paths)
         {
-            vectorList.Add(path.position);
+            vectorList.Add(path.position);  
         }
-        Debug.Log(vectorList.Count);
 
-        tween = target.DOPath(vectorList.ToArray(), 3f, PathType.CatmullRom, PathMode.TopDown2D)
+        tween = target.DOPath(vectorList.ToArray(), speed, PathType.CatmullRom, PathMode.TopDown2D)
             .SetUpdate(UpdateType.Fixed)
             .SetSpeedBased()
             .SetEase(Ease.Linear)
-            .SetLoops(-1, LoopType.Yoyo);
+            .SetLoops(0, LoopType.Yoyo);
+            
+        StartCoroutine(EndOfRoad());
+        defaultSpeed = tween.timeScale;
+        StopTime();
+        StartTime();
     }
-    void Update()
+
+    /*private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
+        //vectorList[]
+    }*/
+
+    public void SetSpeed(float speedAmplifier)
+    {
+        tween.timeScale = defaultSpeed * ((100 - speedAmplifier)/100);
+    }
+
+    public void SetSpeedDefault()
+    {
+        tween.timeScale = defaultSpeed ;
+    }    
+
+    IEnumerator EndOfRoad()
+    {
+        yield return tween.WaitForCompletion();
+        if(gameObject.tag == "MainRoadEnemy"){gameManager.HpLost(1);}
+        if(gameObject.tag == "SideRoadEnemy"){gameManager.AddLego(1);}
+        Destroy(gameObject);
+    }
+
+    public void StopTime()
+    {
+        if(tween != null)
         {
-            SpeedDown();
-        }
-        else if (Input.GetKeyDown(KeyCode.N))
-        {
-            SpeedUp();
+        speedTemp = tween.timeScale;
+        tween.timeScale = 0f;
         }
     }
 
-    void SpeedDown()
+    public void StartTime()
     {
-        Debug.Log("SpeedUp");
-        tween.timeScale = tween.timeScale / 2;
+        if(tween != null)
+        {
+        tween.timeScale = speedTemp;
+        }
     }
-    void SpeedUp()
-    {
-        Debug.Log("SpeedDown");
-        tween.timeScale = tween.timeScale *2;
-    }    
 }
