@@ -131,6 +131,8 @@ public class Standart : MonoBehaviour
         damage = 6f + (redBlock* 4f);
         attackSpeed = 0.33f + (blueBlock * 0.15f);
         range = 2 + (greenBlock * 0.22f);
+
+        
         Debug.Log(damage + " - " + attackSpeed + " - " + range);
         
     }
@@ -192,6 +194,11 @@ public class Standart : MonoBehaviour
     {
         this_SpriteRenderer = GetComponent<SpriteRenderer>();
         this_SpriteRenderer.color = _color;
+    }
+
+    public void IncreaseKillCount()
+    {
+
     }
 
     public void StopTime()

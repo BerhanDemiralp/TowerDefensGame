@@ -48,28 +48,30 @@ public class GameManager : MonoBehaviour
     {
         healthText = GameObject.Find("HealthPoints").GetComponent<TextMeshProUGUI>();
         blockCountText = GameObject.Find("BlockCount").GetComponent<TextMeshProUGUI>();
+        healthText.text = PlayerHp.ToString();
+        blockCountText.text = blockCount.ToString();
     }
     
     private void Update()
     {
-        timeUntilNextSpawn += Time.deltaTime;
-        if(spawnCooldown >= 0.1)spawnCooldown -= 0.02f * Time.deltaTime;
-
-        if(!timeStopped && timeUntilNextSpawn >= spawnCooldown && enemyCountTemp < maxEnemyCount)
+        if(!timeStopped){timeUntilNextSpawn += Time.deltaTime;
+        if(spawnCooldown >= 0.1 && !timeStopped){spawnCooldown -= 0.02f * Time.deltaTime;}}
+        //Debug.Log(timeUntilNextSpawn);
+        if(!timeStopped && (timeUntilNextSpawn >= spawnCooldown) && (enemyCountTemp < maxEnemyCount))
         {
+            timeUntilNextSpawn = 0;
             summon = Instantiate(mainRoadEnemies[0]);
             MainRoadEnemy summonScript = summon.GetComponent<MainRoadEnemy>();
-            sideSummon = Instantiate(sideRoadEnemies[0]);
-            MainRoadEnemy sideSummonScript = summon.GetComponent<MainRoadEnemy>();
-            enemyCount++; enemyCount++;
-            enemyCountTemp++; enemyCountTemp++;
+            //sideSummon = Instantiate(sideRoadEnemies[0]);
+            //SideRoadEnemy sideSummonScript = summon.GetComponent<SideRoadEnemy>();
             summonScript.SetHitPoints(enemyHitPoints);
             summonScript.SetCount(enemyCount);
-            sideSummonScript.SetHitPoints(enemyHitPoints);
-            sideSummonScript.SetCount(enemyCount);
-
+            //sideSummonScript.SetHitPoints(enemyHitPoints);
+            //sideSummonScript.SetCount(enemyCount);
+            enemyCount++; enemyCount++;
+            enemyCountTemp++; enemyCountTemp++;
+            
             //Debug.Log("Enemy summoned with " + summonScript.hitPoints + "hit points!");
-            timeUntilNextSpawn = 0;
         }
     }
 
@@ -100,6 +102,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < howMany; i++)
         {
             blockCount++;
+            blockCountText.text = blockCount.ToString();
         }
     }
 
@@ -108,6 +111,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < howMany; i++)
         {
             blockCount--;
+            blockCountText.text = blockCount.ToString();
         }
     }
 

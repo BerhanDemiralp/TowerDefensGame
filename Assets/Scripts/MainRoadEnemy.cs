@@ -34,11 +34,10 @@ public class MainRoadEnemy : MonoBehaviour
     public void DealDamage(float damage)
     {
         hitPoints -= damage * damageAmplifier;
-        Debug.Log(damage + " taken!");
         if(hitPoints <= 0)
         {
             gameManagerScript.enemyCountTemp--;
-            Destroy(gameObject);
+            DestroyEnemy();
         }
     }
 
@@ -64,6 +63,11 @@ public class MainRoadEnemy : MonoBehaviour
         damageAmplifier = (100 + _damageAmplifier)/100;
         yield return new WaitForSeconds(_time);
         damageAmplifier = 1;
+    }
+
+    public void DestroyEnemy()
+    {
+        Destroy(gameObject);
     }
 
     

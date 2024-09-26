@@ -21,7 +21,6 @@ public class SideRoadEnemy : MonoBehaviour
     {
         gameManager = GameObject.Find("GameManager");
         gameManagerScript = gameManager.GetComponent<GameManager>();
-        Debug.Log("My hp is " + hitPoints);
     }
 
     public void SetHitPoints(float _hitPoints)

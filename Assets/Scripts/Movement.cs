@@ -2,9 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using System.Numerics;
+using Vector3 = UnityEngine.Vector3;
+using System.IO;
+using Unity.Mathematics;
+using Quaternion = UnityEngine.Quaternion;
 
 public class Movement : MonoBehaviour
 {
+    public const float pi = 3.1415f;
     public GameObject road;
     private GameManager gameManager;
     public Transform target;
@@ -16,6 +22,10 @@ public class Movement : MonoBehaviour
     private float speedTemp = 0;
     public List<Vector3> vectorList = new List<Vector3>();
     private bool slowed;
+    private Vector3 lastPosition = new Vector3(0,0,0);
+    private Vector3 rotationAngel = new Vector3(0,0,0);
+    private Vector3 zero = new Vector3(0,0,0);
+    private float timeUntilRotate = 0;
 
     void Start()
     {
@@ -26,22 +36,49 @@ public class Movement : MonoBehaviour
         if(gameObject.tag == "SideRoadEnemy"){road = GameObject.Find("SidePath");paths = GameObject.Find("SidePath").transform;}
 
         vectorList = new List<Vector3>(); // Liste �evirilme amac� anl�k olarak vectore ekleme ��karma yapabilme
+        //transform.DORotate(new Vector3(0,0,30f), speed, RotateMode.FastBeyond360);
 
         foreach (Transform path in paths)
         {
             vectorList.Add(path.position);  
         }
+        
 
         tween = target.DOPath(vectorList.ToArray(), speed, PathType.CatmullRom, PathMode.TopDown2D)
             .SetUpdate(UpdateType.Fixed)
             .SetSpeedBased()
             .SetEase(Ease.Linear)
             .SetLoops(0, LoopType.Yoyo);
-            
+        
         StartCoroutine(EndOfRoad());
         defaultSpeed = tween.timeScale;
         StopTime();
         StartTime();
+    }
+
+    /// <summary>
+    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// </summary>
+    private void Update()
+    {
+        if(!gameManager.timeStopped)
+        {
+            timeUntilRotate += Time.deltaTime;
+            if(timeUntilRotate >= 0.0033)
+            { 
+                
+                rotationAngel = transform.rotation.eulerAngles - new UnityEngine.Vector3(0,0, Mathf.Atan(GetTan(transform.position, lastPosition))*180/pi);
+                Debug.Log(rotationAngel);
+                transform.DOLocalRotate(rotationAngel, speed, RotateMode.FastBeyond360).SetRelative(true).SetEase(Ease.Linear);
+                //new Vector3(0,0,Vector3.Angle(transform.position, lastPosition)* 10f)
+                //Debug.Log(Vector3.Angle(new Vector3(25,25,25), new Vector3(25,50,50)));
+                lastPosition = transform.position;
+                timeUntilRotate = 0;
+                
+            
+        }
+        
+    }
     }
 
     /*private void Update()
@@ -82,5 +119,10 @@ public class Movement : MonoBehaviour
         {
         tween.timeScale = speedTemp;
         }
+    }
+
+    private float GetTan(Vector3 x, Vector3 y)
+    {
+        return (x.y - y.y) / (x.x - y.x);
     }
 }

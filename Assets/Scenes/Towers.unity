@@ -1959,7 +1959,7 @@ MonoBehaviour:
   blockCountText: {fileID: 0}
   maxEnemyCount: 100
   enemyHitPoints: 100
-  spawnCooldown: 2
+  spawnCooldown: 4
   enemyCount: 0
   enemyCountTemp: 0
   blockCount: 7
