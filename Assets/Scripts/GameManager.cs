@@ -19,12 +19,15 @@ public class GameManager : MonoBehaviour
     
     private GameObject summon;
     private GameObject sideSummon;
-    private float timeUntilNextSpawn = 0f;
+    private float timeUntilNextMainRoadSpawn = 0f;
+    private float timeUntilNextSideRoadSpawn = 0f;
 
     [Header("Attributes")]
     public int maxEnemyCount = 10;
-    public int enemyHitPoints = 50;
-    public float spawnCooldown = 3f;
+    public int mainRoadHitPoints = 50;
+    public int sideRoadHitPoints = 50;
+    public float mainRoadSpawnCooldown = 3f;
+    public float sideRoadSpawnCooldown = 3f;
     public int enemyCount = 0;
     public int enemyCountTemp = 0;
 
@@ -33,9 +36,9 @@ public class GameManager : MonoBehaviour
 
     public bool timeStopped = false;
 
-    public int BlueBlockCount;
+    /*public int BlueBlockCount;
     public int GreenBlockCount;
-    public int RedBlockCount;
+    public int RedBlockCount;*/
     private void Awake()
     {
         if (instance == null)
@@ -50,28 +53,30 @@ public class GameManager : MonoBehaviour
         blockCountText = GameObject.Find("BlockCount").GetComponent<TextMeshProUGUI>();
         healthText.text = PlayerHp.ToString();
         blockCountText.text = blockCount.ToString();
+        SummonMainRoadEnemy();
+        SummonSideRoadEnemy();
     }
     
     private void Update()
     {
-        if(!timeStopped){timeUntilNextSpawn += Time.deltaTime;
-        if(spawnCooldown >= 0.1 && !timeStopped){spawnCooldown -= 0.02f * Time.deltaTime;}}
-        //Debug.Log(timeUntilNextSpawn);
-        if(!timeStopped && (timeUntilNextSpawn >= spawnCooldown) && (enemyCountTemp < maxEnemyCount))
+        if(!timeStopped)
         {
-            timeUntilNextSpawn = 0;
-            summon = Instantiate(mainRoadEnemies[0]);
-            MainRoadEnemy summonScript = summon.GetComponent<MainRoadEnemy>();
-            //sideSummon = Instantiate(sideRoadEnemies[0]);
-            //SideRoadEnemy sideSummonScript = summon.GetComponent<SideRoadEnemy>();
-            summonScript.SetHitPoints(enemyHitPoints);
-            summonScript.SetCount(enemyCount);
-            //sideSummonScript.SetHitPoints(enemyHitPoints);
-            //sideSummonScript.SetCount(enemyCount);
-            enemyCount++; enemyCount++;
-            enemyCountTemp++; enemyCountTemp++;
-            
-            //Debug.Log("Enemy summoned with " + summonScript.hitPoints + "hit points!");
+            timeUntilNextMainRoadSpawn += Time.deltaTime;
+            timeUntilNextSideRoadSpawn += Time.deltaTime;
+            if(mainRoadSpawnCooldown >= 0.1 && !timeStopped){mainRoadSpawnCooldown -= 0.02f * Time.deltaTime;}
+            if(sideRoadSpawnCooldown >= 0.1 && !timeStopped){sideRoadSpawnCooldown -= 0.02f * Time.deltaTime;}
+        }
+        //Debug.Log(timeUntilNextSpawn);
+        if(!timeStopped && (timeUntilNextMainRoadSpawn >= mainRoadSpawnCooldown) && (enemyCountTemp < maxEnemyCount))
+        {
+            timeUntilNextMainRoadSpawn = 0;
+            SummonMainRoadEnemy();
+        }
+
+        if(!timeStopped && (timeUntilNextSideRoadSpawn >= sideRoadSpawnCooldown) && (enemyCountTemp < maxEnemyCount))
+        {
+            timeUntilNextSideRoadSpawn = 0;
+            SummonSideRoadEnemy();
         }
     }
 
@@ -94,6 +99,11 @@ public class GameManager : MonoBehaviour
     {
         PlayerHp -= damage;
         healthText.text = PlayerHp.ToString();
+        if(PlayerHp <= 0)
+        {
+            Debug.Log("Game Over!");
+            SceneManager.LoadScene("EndingScene");
+        }
 
     }
 
@@ -113,6 +123,26 @@ public class GameManager : MonoBehaviour
             blockCount--;
             blockCountText.text = blockCount.ToString();
         }
+    }
+
+    private void SummonMainRoadEnemy()
+    {
+        summon = Instantiate(mainRoadEnemies[0]);
+        MainRoadEnemy summonScript = summon.GetComponent<MainRoadEnemy>();
+        summonScript.SetHitPoints(mainRoadHitPoints);
+        summonScript.SetCount(enemyCount);
+        enemyCount++;
+        enemyCountTemp++;
+    }
+
+    private void SummonSideRoadEnemy()
+    {
+        sideSummon = Instantiate(sideRoadEnemies[0]);
+        SideRoadEnemy sideSummonScript = sideSummon.GetComponent<SideRoadEnemy>();
+        sideSummonScript.SetHitPoints(sideRoadHitPoints);
+        sideSummonScript.SetCount(enemyCount);
+        enemyCount++;
+        enemyCountTemp++;
     }
 
     

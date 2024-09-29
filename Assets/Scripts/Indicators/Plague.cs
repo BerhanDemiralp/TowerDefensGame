@@ -36,9 +36,9 @@ public class Plague : MonoBehaviour
     private Transform indicator;
     private float timeUntilFire = 10;
 
-    private float speedMultiplier = 0;
+    public float speedMultiplier = 0;
     private float slowTime = 0.5f;
-    private float damageAmplifier = 0;
+    public float damageAmplifier = 0;
     private float damageAmplifierTime = 0.5f;
     private int level = 1;
     private int totalBlockCount = 0;
@@ -54,8 +54,10 @@ public class Plague : MonoBehaviour
 
     void Update()
     {
-        if(gameManager.getTime())
+        Debug.Log("Update!");
+        if(!gameManager.getTime())
         {
+            Debug.Log(gameManager.getTime());
             timeUntilFire += Time.deltaTime;
             if(timeUntilFire >= 0.1f)
             {
@@ -69,12 +71,15 @@ public class Plague : MonoBehaviour
     }
     private void FindTarget()
     {
+        Debug.Log("Finding target!");
         RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, range, (Vector2)transform.position, 0f, enemyMask);
         if(hits.Length > 0){
             foreach (RaycastHit2D hit in hits)
             {
+                Debug.Log("Enemy found!");
                 if(hit.transform.tag == "MainRoadEnemy")
                 {
+                    Debug.Log("MainRoadEnemy found!");
                     target = hit.transform.gameObject;
                     MainRoadEnemy targetScript = target.GetComponent<MainRoadEnemy>();
                     targetScript.SetSpeed(speedMultiplier, slowTime);
@@ -87,6 +92,7 @@ public class Plague : MonoBehaviour
                 }
                 if(hit.transform.tag == "SideRoadEnemy")
                 {
+                    Debug.Log("SideRoadEnemy found!");
                     SideRoadEnemy targetScript = target.GetComponent<SideRoadEnemy>();
                     targetScript.SetSpeed(speedMultiplier, slowTime);
                     Debug.Log(target.name + " slowed!");

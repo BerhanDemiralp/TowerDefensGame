@@ -10,9 +10,13 @@ public class SideRoadEnemy : MonoBehaviour
     [SerializeField] public float hitPoints = 100;
     [SerializeField] public float enemyCount = 0;
     [SerializeField] private Movement movement;
+    [SerializeField] private GameObject legoGainEffect;
 
     private float _speed;
-    private float damageAmplifier = 0;
+    private float damageAmplifier = 1;
+    private SpriteRenderer spriteRenderer;
+    private Color defaultColor;
+
     private  GameObject gameManager;
     private GameManager gameManagerScript;
     private bool canDO = true;
@@ -21,11 +25,14 @@ public class SideRoadEnemy : MonoBehaviour
     {
         gameManager = GameObject.Find("GameManager");
         gameManagerScript = gameManager.GetComponent<GameManager>();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        defaultColor = spriteRenderer.color;
     }
 
     public void SetHitPoints(float _hitPoints)
     {
         hitPoints = _hitPoints;
+        Debug.Log("Health set!");
     }
 
     public void SetCount(int _enemyCount)
@@ -36,9 +43,14 @@ public class SideRoadEnemy : MonoBehaviour
     public void DealDamage(float damage)
     {
         hitPoints -= damage * damageAmplifier;
+        StartCoroutine(SetDamageColor());
         Debug.Log("Current hp is " + hitPoints);
         if(hitPoints <= 0)
         {
+            Debug.Log("Gonna die!");
+            Instantiate(legoGainEffect, transform.position, transform.rotation);
+            gameManagerScript.AddLego(1);
+            Debug.Log("Effect on!");
             gameManagerScript.enemyCountTemp--;
             Destroy(gameObject);
         }
@@ -68,6 +80,12 @@ public class SideRoadEnemy : MonoBehaviour
         damageAmplifier = 1;
     }
 
+    IEnumerator SetDamageColor()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.05f);
+        spriteRenderer.color = defaultColor;
+    }
     
     
 }

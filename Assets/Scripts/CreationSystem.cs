@@ -73,7 +73,6 @@ public class CreationSystem : MonoBehaviour
                 Destroy(towerOnMouseTemp);
                 StartCoroutine(WaitForNextTowerCreation());
                 SetDefaults();
-                canPlace= false;
             }
             else
             {

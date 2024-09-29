@@ -73,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 2103142961
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.06848521, g: 0.33189157, b: 0.764151, a: 1}
@@ -116,9 +116,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 038d0ff455c8d8f4cbc43c6fe1b01155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 100
+  hitPoints: 2
   enemyCount: 0
   movement: {fileID: 3874908909465888605}
+  legoGainEffect: {fileID: 4052834176749046208, guid: 6ce98c26315c40c4e9a7e5f25454ef2a, type: 3}
 --- !u!61 &5864970337620243514
 BoxCollider2D:
   m_ObjectHideFlags: 0

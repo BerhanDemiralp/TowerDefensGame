@@ -26,7 +26,6 @@ public class TowerImageOnMouse : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D col)
     {
-        Debug.Log("stay");
         if (col.collider.CompareTag("Tower") || col.collider.CompareTag("Road"))
         {
             isColliding = true;
@@ -34,8 +33,6 @@ public class TowerImageOnMouse : MonoBehaviour
     }
     private void OnCollisionExit2D(Collision2D col)
     {
-        Debug.Log("exit");
-
         if (col.collider.CompareTag("Tower") || col.collider.CompareTag("Road"))
         {
             isColliding= false;

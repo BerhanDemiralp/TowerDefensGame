@@ -11,7 +11,9 @@ public class MainRoadEnemy : MonoBehaviour
     [SerializeField] private Movement movement;
 
     private float _speed;
-    private float damageAmplifier = 0;
+    private float damageAmplifier = 1;
+    private Color defaultColor;
+    private SpriteRenderer spriteRenderer;
     private  GameObject gameManager;
     private GameManager gameManagerScript;
     
@@ -19,6 +21,8 @@ public class MainRoadEnemy : MonoBehaviour
     {
         gameManager = GameObject.Find("GameManager");
         gameManagerScript = gameManager.GetComponent<GameManager>();
+        spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+        defaultColor = spriteRenderer.color;
     }
 
     public void SetHitPoints(float _hitPoints)
@@ -34,6 +38,7 @@ public class MainRoadEnemy : MonoBehaviour
     public void DealDamage(float damage)
     {
         hitPoints -= damage * damageAmplifier;
+        StartCoroutine(SetDamageColor());
         if(hitPoints <= 0)
         {
             gameManagerScript.enemyCountTemp--;
@@ -63,6 +68,12 @@ public class MainRoadEnemy : MonoBehaviour
         damageAmplifier = (100 + _damageAmplifier)/100;
         yield return new WaitForSeconds(_time);
         damageAmplifier = 1;
+    }
+    IEnumerator SetDamageColor()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.05f);
+        spriteRenderer.color = defaultColor;
     }
 
     public void DestroyEnemy()

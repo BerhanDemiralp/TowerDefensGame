@@ -59,7 +59,7 @@ public class Movement : MonoBehaviour
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
-    private void Update()
+    /*private void Update()
     {
         if(!gameManager.timeStopped)
         {
@@ -68,7 +68,7 @@ public class Movement : MonoBehaviour
             { 
                 
                 rotationAngel = transform.rotation.eulerAngles - new UnityEngine.Vector3(0,0, Mathf.Atan(GetTan(transform.position, lastPosition))*180/pi);
-                Debug.Log(rotationAngel);
+               // Debug.Log(rotationAngel);
                 transform.DOLocalRotate(rotationAngel, speed, RotateMode.FastBeyond360).SetRelative(true).SetEase(Ease.Linear);
                 //new Vector3(0,0,Vector3.Angle(transform.position, lastPosition)* 10f)
                 //Debug.Log(Vector3.Angle(new Vector3(25,25,25), new Vector3(25,50,50)));
@@ -79,7 +79,7 @@ public class Movement : MonoBehaviour
         }
         
     }
-    }
+    }*/
 
     /*private void Update()
     {
@@ -88,19 +88,24 @@ public class Movement : MonoBehaviour
 
     public void SetSpeed(float speedAmplifier)
     {
+        if(!gameManager.getTime())
+        {
         tween.timeScale = defaultSpeed * ((100 - speedAmplifier)/100);
+        }
     }
 
     public void SetSpeedDefault()
     {
+        if(!gameManager.getTime())
+        {
         tween.timeScale = defaultSpeed ;
+        }
     }    
 
     IEnumerator EndOfRoad()
     {
         yield return tween.WaitForCompletion();
         if(gameObject.tag == "MainRoadEnemy"){gameManager.HpLost(1);}
-        if(gameObject.tag == "SideRoadEnemy"){gameManager.AddLego(1);}
         Destroy(gameObject);
     }
 
