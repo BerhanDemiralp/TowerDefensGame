@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class CreationSystem : MonoBehaviour
 {
+    [SerializeField] private int indicatorCount;
     private GameManager gameManager;
     private GameObject[] allEnemies;
     private GameObject[] allTowers;
@@ -34,7 +35,9 @@ public class CreationSystem : MonoBehaviour
     public TextMeshProUGUI blueBlockCount;
     public TextMeshProUGUI greenBlockCount;
     public TextMeshProUGUI redBlockCount;
+    public TextMeshProUGUI indicatorTextUp;
     public TextMeshProUGUI indicatorText;
+    public TextMeshProUGUI indicatorTextDown;
 
     public Button myButton;
 
@@ -48,6 +51,9 @@ public class CreationSystem : MonoBehaviour
     {
         SetDefaults();
         indicatorType = 0;
+        indicatorTextUp.text = "Bomber";
+        indicatorText.text = "Standart";
+        indicatorTextDown.text = "Plague";
         creationPanel.transform.position += new Vector3(0, -400, 0);
     }
 
@@ -90,30 +96,59 @@ public class CreationSystem : MonoBehaviour
         towerTemp.GetComponent<Tower>().SetIndicator(_indicatorType);
     }
 
-    public void ChangeIndicator()
+    public void UpIndicator()
     {
-        switch(indicatorType){
-            case 0:
+        indicatorType += 1;
+        if (indicatorType == indicatorCount)
+        {
+            indicatorType= 0;
+        }
+        switchIndicator(indicatorType);
+    }
+    public void DownIndicator()
+    {
+        indicatorType -= 1;
+        if (indicatorType <= 0)
+        {
+            indicatorType = indicatorCount-1;
+        }
+        switchIndicator(indicatorType);
+    }
+    private void switchIndicator(int _indicatorType)
+    {
+        switch (_indicatorType)
+        {
+            case 1:
+                indicatorTextUp.text = "Gunner";
                 indicatorText.text = "Bomber";
+                indicatorTextDown.text = "Standart";
+
                 color = Color.red;
                 break;
-            case 1:
+            case 2:
+                indicatorTextUp.text = "Shredder";
                 indicatorText.text = "Gunner";
+                indicatorTextDown.text = "Bomber";
+
                 color = Color.black;
                 break;
-            case 2:
-                indicatorText.text = "Shredder";
-                break;
             case 3:
-                indicatorText.text = "Plague";
+                indicatorTextUp.text = "Plague";
+                indicatorText.text = "Shredder";
+                indicatorTextDown.text = "Gunner";
                 break;
             case 4:
+                indicatorTextUp.text = "Standart";
+                indicatorText.text = "Plague";
+                indicatorTextDown.text = "Shredder";
+                break;
+            case 0:
+                indicatorTextUp.text = "Bomber";
                 indicatorText.text = "Standart";
+                indicatorTextDown.text = "Plague";
                 color = Color.white;
-                indicatorType = -1;
                 break;
         }
-        indicatorType++;
     }
     private void ClearCounts()
     {
@@ -223,7 +258,7 @@ public class CreationSystem : MonoBehaviour
 
     public void OpenUI()
     {
-        if(!isUIon && !canPlace){
+        if(!isUIon ){
             creationPanel.transform.position += new Vector3(0, 400, 0);
             StopTime();
             isUIon = true;
