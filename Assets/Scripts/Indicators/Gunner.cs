@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using System.Runtime.CompilerServices;
 using Unity.Mathematics;
 using Unity.IO.LowLevel.Unsafe;
@@ -107,13 +109,14 @@ public class Gunner : MonoBehaviour
         targetRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
         turretRotationPoint.rotation = Quaternion.RotateTowards(turretRotationPoint.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
-
+    #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
         Handles.color = Color.cyan;
         Handles.DrawWireDisc(transform.position, transform.forward, range);
 
     }
+    #endif
 
     private bool CheckTargetIsInRange()
     {

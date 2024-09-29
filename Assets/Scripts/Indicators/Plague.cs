@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using System.Runtime.CompilerServices;
 using Unity.Mathematics;
 using Unity.IO.LowLevel.Unsafe;
@@ -108,12 +110,13 @@ public class Plague : MonoBehaviour
             
         }
     }
+    #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
         Handles.color = Color.cyan;
         Handles.DrawWireDisc(transform.position, transform.forward, range);
-
     }
+    #endif
 
     public void SetBlocks(int redBlockTemp, int blueBlockTemp, int greenBlockTemp)
     {
