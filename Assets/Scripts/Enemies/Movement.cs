@@ -24,6 +24,7 @@ public class Movement : MonoBehaviour
     private bool slowed;
     private Vector3 lastPosition = new Vector3(0,0,0);
     private Vector3 rotationAngel = new Vector3(0,0,0);
+    private Vector3 targetDirection;
     private Vector3 zero = new Vector3(0,0,0);
     private float timeUntilRotate = 0;
 
@@ -51,6 +52,7 @@ public class Movement : MonoBehaviour
             .SetLoops(0, LoopType.Yoyo);
         
         StartCoroutine(EndOfRoad());
+        tween.timeScale = 0.5f;
         defaultSpeed = tween.timeScale;
         StopTime();
         StartTime();
@@ -59,7 +61,7 @@ public class Movement : MonoBehaviour
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
-    /*private void Update()
+    private void Update()
     {
         if(!gameManager.timeStopped)
         {
@@ -67,11 +69,31 @@ public class Movement : MonoBehaviour
             if(timeUntilRotate >= 0.0033)
             { 
                 
-                rotationAngel = transform.rotation.eulerAngles - new UnityEngine.Vector3(0,0, Mathf.Atan(GetTan(transform.position, lastPosition))*180/pi);
-               // Debug.Log(rotationAngel);
-                transform.DOLocalRotate(rotationAngel, speed, RotateMode.FastBeyond360).SetRelative(true).SetEase(Ease.Linear);
+                //rotationAngel = new UnityEngine.Vector3(0,0, Mathf.Atan(GetTan(transform.position, lastPosition))*180/pi);
+                // Debug.Log(rotationAngel);
+                //transform.localRotation *= new Quaternion(0,0, rotationAngel.z, 1f);
                 //new Vector3(0,0,Vector3.Angle(transform.position, lastPosition)* 10f)
                 //Debug.Log(Vector3.Angle(new Vector3(25,25,25), new Vector3(25,50,50)));
+
+                // Determine which direction to rotate towards
+                rotationAngel = transform.position - lastPosition;
+                targetDirection = new Vector3(0,0,Mathf.Atan2(rotationAngel.y, rotationAngel.x));
+                
+
+                //targetDirection = lastPosition - transform.position;
+
+                // The step size is equal to speed times frame time.
+                //float singleStep = speed * Time.deltaTime;
+
+                // Rotate the forward vector towards the target direction by one step
+                Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, 360, 0.0f);
+
+                // Draw a ray pointing at our target in
+                //Debug.DrawRay(transform.position, newDirection, Color.red);
+
+                // Calculate a rotation a step closer to the target and applies rotation to this object
+                transform.rotation = Quaternion.LookRotation(newDirection);
+
                 lastPosition = transform.position;
                 timeUntilRotate = 0;
                 
@@ -79,7 +101,7 @@ public class Movement : MonoBehaviour
         }
         
     }
-    }*/
+    }
 
     /*private void Update()
     {
@@ -88,7 +110,7 @@ public class Movement : MonoBehaviour
 
     public void SetSpeed(float speedAmplifier)
     {
-        if(!gameManager.getTime())
+        if(!gameManager.GetTime())
         {
         tween.timeScale = defaultSpeed * ((100 - speedAmplifier)/100);
         }
@@ -96,7 +118,7 @@ public class Movement : MonoBehaviour
 
     public void SetSpeedDefault()
     {
-        if(!gameManager.getTime())
+        if(!gameManager.GetTime())
         {
         tween.timeScale = defaultSpeed ;
         }

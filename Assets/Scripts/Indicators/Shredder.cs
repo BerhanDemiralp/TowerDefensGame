@@ -8,25 +8,26 @@ using System.Runtime.CompilerServices;
 using Unity.Mathematics;
 using Unity.IO.LowLevel.Unsafe;
 using System.Diagnostics.Tracing;
-using Unity.VisualScripting;
 
-public class Standart : MonoBehaviour
+
+
+
+public class Shredder : MonoBehaviour
 {
 
-    private const string BULLETNAME = "StandartBullet";
-
+    private const string BULLETNAME = "ShredderBullet";
 
     [Header("References")]
     [SerializeField] protected Transform turretRotationPoint;
     [SerializeField] protected Transform firingPoint;
     [SerializeField] protected LayerMask enemyMask;
     [SerializeField] protected GameObject bullet;
-    
+    private GameManager gameManager;
     
     
     [Header("Attribute")]
     [SerializeField] protected float damage = 0;
-    [SerializeField] protected float attackSpeed = 2;
+    [SerializeField] protected float attackSpeed = 2; 
     [SerializeField] protected float range = 5f;
     [SerializeField] protected float rotationSpeed = 500f;
     [SerializeField] protected bool canShoot = true;
@@ -35,16 +36,13 @@ public class Standart : MonoBehaviour
     protected Quaternion targetRotation;
     protected SpriteRenderer this_SpriteRenderer;
 
-    private bool timeStopped = false;
-
     private float timeUntilFire = 10;
 
-    private int level = 1;
-    private int totalBlockCount = 0;
+    private int level = 0;
     private int redBlock;
     private int blueBlock;
     private int greenBlock;
-    
+
 
     void Start()
     {
@@ -53,41 +51,48 @@ public class Standart : MonoBehaviour
 
     void Update()
     {
-        if(!timeStopped)
+        if(!gameManager.GetTime())
         {
             timeUntilFire += Time.deltaTime;
-            if(target == null)
-            {
-                FindTarget();
-                return;
-            
-            }
         
-            RotateTowardsTarget();
 
-            if(!CheckTargetIsInRange())
-            {
-                target = null;
-            }else
-            {
+        if(target == null)
+        {
+            FindTarget();
+            return;
             
-                if(timeUntilFire >= 1f / attackSpeed && CompareQuaternion(turretRotationPoint.rotation, targetRotation))
-                {
-                    Shoot();
-                    timeUntilFire = 0;
-                }
-            
-            }
         }
+        
+        RotateTowardsTarget();
+
+       if(!CheckTargetIsInRange())
+       {
+            target = null;
+       }else
+        {
+            
+            if(timeUntilFire >= 1f / attackSpeed && CompareQuaternion(turretRotationPoint.rotation, targetRotation))
+            {
+                Shoot();
+                timeUntilFire = 0;
+            }
+            
+        }
+        }
+        
     }
 
     private void Shoot()
     {
         var _bullet = Instantiate(bullet, firingPoint.position, Quaternion.identity);
-        StandartBullet bulletScript = _bullet.GetComponent<StandartBullet>();
-        bulletScript.SetTarget(target);
-        bulletScript.setCreator(gameObject);
+        ShredderBullet bulletScript = _bullet.GetComponent<ShredderBullet>();
+        bulletScript.SetDirection(firingPoint.position - transform.position);
+        //bulletScript.SetTarget(target);
+        //bulletScript.SetCreator(gameObject);
         bulletScript.SetDamage(damage);
+        bulletScript.SetLevel(level);
+        bulletScript.SetLegos(redBlock, blueBlock, greenBlock);
+
     }
 
     private void FindTarget()
@@ -110,6 +115,7 @@ public class Standart : MonoBehaviour
     {
         Handles.color = Color.cyan;
         Handles.DrawWireDisc(transform.position, transform.forward, range);
+
     }
     #endif
 
@@ -123,45 +129,26 @@ public class Standart : MonoBehaviour
         redBlock = redBlockTemp;
         blueBlock = blueBlockTemp;
         greenBlock = greenBlockTemp;
-        totalBlockCount = redBlock + blueBlock + greenBlock;
         SetStats();
-        SetLevel();
     }
 
     private void SetStats()
     {
-        damage = 6f + (redBlock* 4f);
-        attackSpeed = 0.33f + (blueBlock * 0.15f);
+        damage = 12f + (redBlock* 4f);
+        attackSpeed = 0.33f + (blueBlock * 0.10f);
         range = 2 + (greenBlock * 0.22f);
-
-        
         Debug.Log(damage + " - " + attackSpeed + " - " + range);
-        
     }
 
-    private void SetLevel()
-    {
-        switch(totalBlockCount){
-            case 6:
-                level = 1;
-                break;
-            case 12:
-                level = 2;
-                break;
-            case 24:
-                level = 3;
-                break;
-        }
-    }
-    
     public void BaseSetter()
     {
         SetBullet(BULLETNAME);
-        SetColor(Color.white);
+        SetColor(Color.blue);
         timeUntilFire = 10f;
         turretRotationPoint = gameObject.transform.GetChild(0);
         firingPoint = gameObject.transform.GetChild(0).GetChild(0).GetChild(0);
         enemyMask = LayerMask.GetMask("Enemy");
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     public void SetBullet(string bulletName)
@@ -171,16 +158,7 @@ public class Standart : MonoBehaviour
         bullet = Resources.Load<GameObject>(bulletName);
     }
 
-
-    /* Anıt olarak bırakıyorum burada.
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if(other.gameObject.tag == "MainRoadEnemy")
-        {
-            //Düşmana hasar vur.
-            Destroy(gameObject);
-        }
-    }*/
+    
 
     public bool CompareQuaternion(Quaternion q1,Quaternion q2)
     {
@@ -197,20 +175,5 @@ public class Standart : MonoBehaviour
         this_SpriteRenderer = GetComponent<SpriteRenderer>();
         this_SpriteRenderer.color = _color;
     }
-
-    public void IncreaseKillCount()
-    {
-
-    }
-
-    public void StopTime()
-    {
-        timeStopped = true;
-    }
-    public void StartTime()
-    {
-        timeStopped = false;
-    }
-    
 
 }

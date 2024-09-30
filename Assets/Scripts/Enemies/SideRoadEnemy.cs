@@ -31,7 +31,6 @@ public class SideRoadEnemy : MonoBehaviour
     public void SetHitPoints(float _hitPoints)
     {
         hitPoints = _hitPoints;
-        Debug.Log("Health set!");
     }
 
     public void SetCount(int _enemyCount)

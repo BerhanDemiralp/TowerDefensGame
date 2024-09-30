@@ -24,7 +24,8 @@ public class CreationSystem : MonoBehaviour
     private int block_count = 0;
     private int towerLevel = 1;
 
-    private Color color = Color.white;
+    private Color color;
+    private Color colorChild;
 
     //Her kule seviyesi için gerekli lego sayıları
     private const int LEVEL1 = 6;
@@ -36,9 +37,9 @@ public class CreationSystem : MonoBehaviour
     public TextMeshProUGUI redBlockCount;
     public TextMeshProUGUI indicatorText;
 
-    public Button myButton;
-
     public GameObject creationPanel;
+    private Image spriteRenderer;
+    private Image spriteRendererChild;
     public GameObject towerOnMouseObj;
     public GameObject tower;
     private GameObject towerOnMouseTemp;
@@ -46,6 +47,10 @@ public class CreationSystem : MonoBehaviour
 
     void Start()
     {
+        spriteRenderer = creationPanel.transform.GetChild(2).GetComponent<Image>();
+        spriteRendererChild = creationPanel.transform.GetChild(2).GetChild(0).GetComponent<Image>();
+        color = spriteRenderer.color;
+        colorChild = spriteRendererChild.color;
         SetDefaults();
         indicatorType = 0;
         creationPanel.transform.position += new Vector3(0, -400, 0);
@@ -189,7 +194,9 @@ public class CreationSystem : MonoBehaviour
         }
     }
     public void AddBlocks()
-    {block_count = blue_block_count + red_block_count + green_block_count;}
+    {
+        block_count = blue_block_count + red_block_count + green_block_count;
+    }
 
     public void CreateTowerButton()
     {
@@ -240,11 +247,18 @@ public class CreationSystem : MonoBehaviour
 
     private void SetBlockTexts()
     {   
+        AddBlocks();
         blueBlockCount.text = blue_block_count.ToString();
         greenBlockCount.text = green_block_count.ToString();
         redBlockCount.text = red_block_count.ToString();
+        if(block_count == 6 || block_count == 12 || block_count == 24)
+        {
+            spriteRenderer.color = Color.green;
+            spriteRendererChild.enabled = true;
+        }
+        else{spriteRenderer.color = Color.red; spriteRendererChild.enabled = false;}
     }
-
+    //new Color(212,207,159)
     public void TowerOnMouse()
     {
         towerOnMouseTemp = Instantiate(towerOnMouseObj);

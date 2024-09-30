@@ -59,7 +59,7 @@ public class Bomber : MonoBehaviour
 
     void Update()
     {
-        if(!gameManager.getTime())
+        if(!gameManager.GetTime())
         {
             timeUntilFire += Time.deltaTime;
         

@@ -32,7 +32,7 @@ public class StandartBullet : MonoBehaviour
     
     private void Update()
     {
-        if(gameManager.timeStopped)
+        if(!gameManager.GetTime() && target == null)
         {
             Destroy(gameObject);
         }
@@ -40,7 +40,7 @@ public class StandartBullet : MonoBehaviour
     
     void FixedUpdate()
     {
-        if(!gameManager.timeStopped)
+        if(!gameManager.GetTime())
         {
             RotateTowardsTarget();
             Vector2 direction = (target.position - transform.position).normalized;
@@ -71,7 +71,7 @@ public class StandartBullet : MonoBehaviour
                 MainRoadEnemy targerScript = other.GetComponent<MainRoadEnemy>();
                 targerScript.DealDamage(damage);
                 Debug.Log(damage + " damage dealt!");
-                Destroy(this.gameObject);
+                Destroy(gameObject);
             }
         }
         if(other.gameObject.tag == "SideRoadEnemy")
@@ -81,7 +81,7 @@ public class StandartBullet : MonoBehaviour
                 SideRoadEnemy targerScript = other.GetComponent<SideRoadEnemy>();
                 targerScript.DealDamage(damage);
                 Debug.Log(damage + " damage dealt!");
-                Destroy(this.gameObject);
+                Destroy(gameObject);
             }
         }
     }
@@ -91,7 +91,7 @@ public class StandartBullet : MonoBehaviour
         creator = _creator;
     }
 
-    public void setDamage(float _damage)
+    public void SetDamage(float _damage)
     {
         damage = _damage;
     }

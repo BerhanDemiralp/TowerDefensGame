@@ -26,14 +26,14 @@ public class TowerImageOnMouse : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D col)
     {
-        if (col.collider.CompareTag("Tower") || col.collider.CompareTag("Road"))
+        if (col.collider.CompareTag("Tower") || col.collider.CompareTag("Road") || col.collider.CompareTag("Edge"))
         {
             isColliding = true;
         }
     }
     private void OnCollisionExit2D(Collision2D col)
     {
-        if (col.collider.CompareTag("Tower") || col.collider.CompareTag("Road"))
+        if (col.collider.CompareTag("Tower") || col.collider.CompareTag("Road") || col.collider.CompareTag("Edge"))
         {
             isColliding= false;
         }

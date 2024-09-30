@@ -33,7 +33,7 @@ public class AoE_Damage : MonoBehaviour
 
     void Update()
     {
-        if(!gameManager.getTime())
+        if(!gameManager.GetTime())
         {
             timeUntilDestroy += Time.deltaTime;
             transform.localScale += new UnityEngine.Vector3(areaRadius * Time.deltaTime, areaRadius * Time.deltaTime, 0);

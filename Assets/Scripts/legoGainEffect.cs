@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class legoGainEffect : MonoBehaviour
+public class LegoGainEffect : MonoBehaviour
 {
     private float timeUntilDestroy = 0f;
 
@@ -18,7 +18,7 @@ public class legoGainEffect : MonoBehaviour
     void Update()
     {
         timeUntilDestroy += Time.deltaTime;
-        transform.localScale += new Vector3(timeUntilDestroy*-0.015f,timeUntilDestroy*-0.015f,0);
+        transform.localScale += new Vector3(timeUntilDestroy*-0.008f,timeUntilDestroy*-0.008f,0);
         transform.position += new Vector3(0,Time.deltaTime * 1f,0);
         if(timeUntilDestroy >= 0.6f)
         {

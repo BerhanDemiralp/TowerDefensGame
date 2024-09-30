@@ -44,7 +44,7 @@ public class GunnerBullet : MonoBehaviour
     
     private void Update()
     {
-        if(!gameManager.getTime() && target == null)
+        if(!gameManager.GetTime() && target == null)
         {
             if(!FindTarget()){Destroy(gameObject);};
         }
@@ -52,7 +52,7 @@ public class GunnerBullet : MonoBehaviour
     
     void FixedUpdate()
     {
-        if(!gameManager.getTime())
+        if(!gameManager.GetTime())
         {
             RotateTowardsTarget();
             Vector2 direction = (target.position - transform.position).normalized;

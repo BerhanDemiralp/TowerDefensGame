@@ -51,7 +51,7 @@ public class Gunner : MonoBehaviour
 
     void Update()
     {
-        if(!gameManager.getTime())
+        if(!gameManager.GetTime())
         {
             timeUntilFire += Time.deltaTime;
         

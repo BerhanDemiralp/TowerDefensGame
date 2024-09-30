@@ -42,7 +42,7 @@ public class BomberBullet : MonoBehaviour
     
     private void Update()
     {
-        if(!gameManager.getTime())
+        if(!gameManager.GetTime())
         {
             if(Vector3.Distance(transform.position,explodePos) <= 0.2f)
             {
@@ -55,7 +55,7 @@ public class BomberBullet : MonoBehaviour
     
     void FixedUpdate()
     {
-        if(!gameManager.getTime()){rb.velocity = direction * speed;}
+        if(!gameManager.GetTime()){rb.velocity = direction * speed;}
     }
 
     public void SetTarget(Transform _target)

@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     
     private GameObject summon;
     private GameObject sideSummon;
+    private float time = 0f;
     private float timeUntilNextMainRoadSpawn = 0f;
     private float timeUntilNextSideRoadSpawn = 0f;
 
@@ -36,9 +37,9 @@ public class GameManager : MonoBehaviour
 
     public bool timeStopped = false;
 
-    /*public int BlueBlockCount;
+    public int BlueBlockCount;
     public int GreenBlockCount;
-    public int RedBlockCount;*/
+    public int RedBlockCount;
     private void Awake()
     {
         if (instance == null)
@@ -59,12 +60,13 @@ public class GameManager : MonoBehaviour
     
     private void Update()
     {
+        time = Time.deltaTime;
         if(!timeStopped)
         {
             timeUntilNextMainRoadSpawn += Time.deltaTime;
             timeUntilNextSideRoadSpawn += Time.deltaTime;
-            if(mainRoadSpawnCooldown >= 0.1 && !timeStopped){mainRoadSpawnCooldown -= 0.02f * Time.deltaTime;}
-            if(sideRoadSpawnCooldown >= 0.1 && !timeStopped){sideRoadSpawnCooldown -= 0.02f * Time.deltaTime;}
+            if(mainRoadSpawnCooldown >= 0.05 && !timeStopped){mainRoadSpawnCooldown -= 0.02f * Time.deltaTime;}
+            if(sideRoadSpawnCooldown >= 0.4 && !timeStopped){sideRoadSpawnCooldown -= 0.005f * Time.deltaTime;}
         }
         //Debug.Log(timeUntilNextSpawn);
         if(!timeStopped && (timeUntilNextMainRoadSpawn >= mainRoadSpawnCooldown) && (enemyCountTemp < maxEnemyCount))
@@ -78,6 +80,10 @@ public class GameManager : MonoBehaviour
             timeUntilNextSideRoadSpawn = 0;
             SummonSideRoadEnemy();
         }
+
+        if(time >= 30 && time <= 60){mainRoadHitPoints = 50; sideRoadHitPoints = 50;}
+        if(time >= 60 && time <= 120){mainRoadHitPoints = 75; sideRoadHitPoints = 75;}
+        if(time >= 120){mainRoadHitPoints = 100; sideRoadHitPoints = 100;}
     }
 
     public void StopTime()
@@ -90,7 +96,7 @@ public class GameManager : MonoBehaviour
         timeStopped = false;
     }
 
-    public bool getTime()
+    public bool GetTime()
     {
         return timeStopped;
     }

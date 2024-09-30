@@ -34,7 +34,7 @@ public class firecrackerSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!gameManager.getTime())
+        if(!gameManager.GetTime())
         {
             timeUntilDestroy += Time.deltaTime;
         timeUntilSpawn += Time.deltaTime;

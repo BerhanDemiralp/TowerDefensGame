@@ -17,14 +17,14 @@ public class firecracker : MonoBehaviour
     void Start()
     {
         transform.localScale = new Vector3(0.1f,0.1f,1f);
-        vector3 = new Vector3(0.002f,0.002f,0);
+        vector3 = new Vector3(0.0011f,0.0011f,0);
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!gameManager.getTime())
+        if(!gameManager.GetTime())
         {
             timeUntilDestroy += Time.deltaTime;
             transform.localScale += vector3;

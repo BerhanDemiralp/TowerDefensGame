@@ -35,6 +35,9 @@ public class Plague : MonoBehaviour
     protected Quaternion targetRotation;
     protected SpriteRenderer this_SpriteRenderer;
 
+    private SideRoadEnemy sideTargetScript;
+    private MainRoadEnemy mainTargetScript;
+
     private Transform indicator;
     private float timeUntilFire = 10;
 
@@ -57,9 +60,9 @@ public class Plague : MonoBehaviour
     void Update()
     {
         Debug.Log("Update!");
-        if(!gameManager.getTime())
+        if(!gameManager.GetTime())
         {
-            Debug.Log(gameManager.getTime());
+            Debug.Log(gameManager.GetTime());
             timeUntilFire += Time.deltaTime;
             if(timeUntilFire >= 0.1f)
             {
@@ -79,28 +82,28 @@ public class Plague : MonoBehaviour
             foreach (RaycastHit2D hit in hits)
             {
                 Debug.Log("Enemy found!");
+                target = hit.transform.gameObject;
                 if(hit.transform.tag == "MainRoadEnemy")
                 {
                     Debug.Log("MainRoadEnemy found!");
-                    target = hit.transform.gameObject;
-                    MainRoadEnemy targetScript = target.GetComponent<MainRoadEnemy>();
-                    targetScript.SetSpeed(speedMultiplier, slowTime);
+                    
+                    mainTargetScript = target.GetComponent<MainRoadEnemy>();
+                    mainTargetScript.SetSpeed(speedMultiplier, slowTime);
                     Debug.Log(target.name + " slowed!");
                     if(level >= 2)
                     {
-                    targetScript.SetDamageAmplifier(damageAmplifier, damageAmplifierTime);
+                    mainTargetScript.SetDamageAmplifier(damageAmplifier, damageAmplifierTime);
                     Debug.Log(target.name + " damaged!");
                     }
-                }
-                if(hit.transform.tag == "SideRoadEnemy")
+                }else if(hit.transform.tag == "SideRoadEnemy")
                 {
                     Debug.Log("SideRoadEnemy found!");
-                    SideRoadEnemy targetScript = target.GetComponent<SideRoadEnemy>();
-                    targetScript.SetSpeed(speedMultiplier, slowTime);
+                    sideTargetScript = target.GetComponent<SideRoadEnemy>(); 
+                    sideTargetScript.SetSpeed(speedMultiplier, slowTime);
                     Debug.Log(target.name + " slowed!");
                     if(level >= 2)
                     {
-                    targetScript.SetDamageAmplifier(damageAmplifier, damageAmplifierTime);
+                    sideTargetScript.SetDamageAmplifier(damageAmplifier, damageAmplifierTime);
                     Debug.Log(target.name + " damaged!");
                     }
                 }

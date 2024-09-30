@@ -20,6 +20,7 @@ public class Tower : MonoBehaviour
     private Standart standartScript;
     private Bomber BomberScript;
     private Gunner gunnerScript;
+    private Shredder shredderScript;
     private Plague plagueScript;
 
 
@@ -51,7 +52,8 @@ public class Tower : MonoBehaviour
                 gunnerScript.SetBlocks(redBlock, blueBlock, greenBlock);
                 break;
             case 3:
-                //Shredder.
+                shredderScript = gameObject.AddComponent<Shredder>();
+                shredderScript.SetBlocks(redBlock, blueBlock, greenBlock);
                 break;
             case 4:
                 plagueScript = gameObject.AddComponent<Plague>();
