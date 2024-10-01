@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class CreationSystem : MonoBehaviour
 {
+    private const int maxIndicatorCount = 5;
     private GameManager gameManager;
     private GameObject[] allEnemies;
     private GameObject[] allTowers;
@@ -35,7 +36,9 @@ public class CreationSystem : MonoBehaviour
     public TextMeshProUGUI blueBlockCount;
     public TextMeshProUGUI greenBlockCount;
     public TextMeshProUGUI redBlockCount;
+    public TextMeshProUGUI indicatorTextUp;
     public TextMeshProUGUI indicatorText;
+    public TextMeshProUGUI indicatorTextDown;
 
     public GameObject creationPanel;
     private Image spriteRenderer;
@@ -94,30 +97,59 @@ public class CreationSystem : MonoBehaviour
         towerTemp.GetComponent<Tower>().SetIndicator(_indicatorType);
     }
 
-    public void ChangeIndicator()
+    public void UpIndicator()
     {
-        switch(indicatorType){
+        indicatorType++;
+        if (indicatorType == maxIndicatorCount)
+        {
+            indicatorType= 0;
+        }
+        SwitchIndicatorText(indicatorType);
+    }
+    public void DownIndicator()
+    {
+        indicatorType--;
+        if (indicatorType < 0)
+        {
+            indicatorType = maxIndicatorCount - 1;
+        }
+        SwitchIndicatorText(indicatorType);
+    }
+    private void SwitchIndicatorText(int _indicatorType)
+    {
+        switch (_indicatorType)
+        {
             case 0:
-                indicatorText.text = "Bomber";
-                color = Color.red;
+                indicatorTextUp.text = "Bomber";
+                indicatorText.text = "Standart";
+                indicatorTextDown.text = "Plague";
+                color = Color.white;
                 break;
             case 1:
-                indicatorText.text = "Gunner";
-                color = Color.black;
+                indicatorTextUp.text = "Gunner";
+                indicatorText.text = "Bomber";
+                indicatorTextDown.text = "Standart";
+
+                color = Color.red;
                 break;
             case 2:
-                indicatorText.text = "Shredder";
+                indicatorTextUp.text = "Shredder";
+                indicatorText.text = "Gunner";
+                indicatorTextDown.text = "Bomber";
+
+                color = Color.black;
                 break;
             case 3:
-                indicatorText.text = "Plague";
+                indicatorTextUp.text = "Plague";
+                indicatorText.text = "Shredder";
+                indicatorTextDown.text = "Gunner";
                 break;
             case 4:
-                indicatorText.text = "Standart";
-                color = Color.white;
-                indicatorType = -1;
+                indicatorTextUp.text = "Standart";
+                indicatorText.text = "Plague";
+                indicatorTextDown.text = "Shredder";
                 break;
         }
-        indicatorType++;
     }
     private void ClearCounts()
     {
@@ -266,6 +298,7 @@ public class CreationSystem : MonoBehaviour
     {
         ClearCounts();
         SetBlockTexts();
+        SwitchIndicatorText(indicatorType);
         indicatorType = 0;
         indicatorText.text = "Standart";
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4933653509774222461}
   - component: {fileID: 1685047955123787622}
   m_Layer: 0
-  m_Name: pixel_lego_red
+  m_Name: pixel_lego_rgb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 2069510129
   m_SortingLayer: 2
   m_SortingOrder: 30
-  m_Sprite: {fileID: 21300000, guid: 4c9aaa63737f4b74d960c5bc362a6560, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1e093bf30f5287349b45f24aa4ff6df7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
