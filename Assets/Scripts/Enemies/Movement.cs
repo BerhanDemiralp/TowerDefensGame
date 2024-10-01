@@ -61,7 +61,7 @@ public class Movement : MonoBehaviour
     /// <summary>
     /// Update is called every frame, if the MonoBehaviour is enabled.
     /// </summary>
-    private void Update()
+    /*private void Update()
     {
         if(!gameManager.timeStopped)
         {
@@ -101,7 +101,7 @@ public class Movement : MonoBehaviour
         }
         
     }
-    }
+    }*/
 
     /*private void Update()
     {

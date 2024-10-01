@@ -134,7 +134,7 @@ public class Plague : MonoBehaviour
 
     private void SetStats()
     {
-        speedMultiplier = 30f + (blueBlock * 50f/24f);
+        speedMultiplier = 20f + (blueBlock * 30f/24f);
         slowTime = 0.5f + (blueBlock * 1/48);
         damageAmplifier = 20f + (redBlock * 30f/24f);
         damageAmplifierTime = 0.5f + (redBlock * 1/48);

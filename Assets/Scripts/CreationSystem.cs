@@ -29,8 +29,8 @@ public class CreationSystem : MonoBehaviour
 
     //Her kule seviyesi için gerekli lego sayıları
     private const int LEVEL1 = 6;
-    private const int LEVEL2 = 12;
-    private const int LEVEL3 = 24;
+    private const int LEVEL2 = 24;
+    private const int LEVEL3 = 60;
 
     public TextMeshProUGUI blueBlockCount;
     public TextMeshProUGUI greenBlockCount;
@@ -47,13 +47,13 @@ public class CreationSystem : MonoBehaviour
 
     void Start()
     {
+        creationPanel.SetActive(false);
         spriteRenderer = creationPanel.transform.GetChild(2).GetComponent<Image>();
         spriteRendererChild = creationPanel.transform.GetChild(2).GetChild(0).GetComponent<Image>();
         color = spriteRenderer.color;
         colorChild = spriteRendererChild.color;
         SetDefaults();
         indicatorType = 0;
-        creationPanel.transform.position += new Vector3(0, -400, 0);
     }
 
     // Update is called once per frame
@@ -202,27 +202,24 @@ public class CreationSystem : MonoBehaviour
     {
         if(!canPlace){
             AddBlocks();
-            switch (block_count){
-                case LEVEL1:
+            if(block_count >= LEVEL1)
+            {
+                if(block_count >= LEVEL1 && block_count < LEVEL2)
+                {
                     towerLevel = 1;
-                    CloseUI();
-                    TowerOnMouse();
-                    break;
-                case LEVEL2:
+                }else if(block_count >= LEVEL2 && block_count < LEVEL3)
+                {
                     towerLevel = 2;
-                    CloseUI();
-                    TowerOnMouse();
-                    break;
-                case LEVEL3:
+                }else if(block_count == LEVEL3)
+                {
                     towerLevel = 3;
-                    CloseUI();
-                    TowerOnMouse();
-                    break;
-                default:
-                    Debug.Log("Towers must have 6, 12 or 24 blocks!");
-                    break;
-            }
+                }
+                CloseUI();
+                TowerOnMouse();
+            }else{Debug.Log("Towers must have at least 6 blocks!");}
+            
         }
+            
         
         
     }
@@ -230,7 +227,7 @@ public class CreationSystem : MonoBehaviour
     public void OpenUI()
     {
         if(!isUIon && !canPlace){
-            creationPanel.transform.position += new Vector3(0, 400, 0);
+            creationPanel.SetActive(true);
             StopTime();
             isUIon = true;
         }
@@ -239,7 +236,7 @@ public class CreationSystem : MonoBehaviour
     public void CloseUI()
     {
         if(isUIon && !canPlace){
-            creationPanel.transform.position += new Vector3(0, -400, 0);
+            creationPanel.SetActive(false);
             StartTime();
             isUIon = false;
         }
@@ -251,12 +248,12 @@ public class CreationSystem : MonoBehaviour
         blueBlockCount.text = blue_block_count.ToString();
         greenBlockCount.text = green_block_count.ToString();
         redBlockCount.text = red_block_count.ToString();
-        if(block_count == 6 || block_count == 12 || block_count == 24)
+        /*if(block_count == 6 || block_count == 12 || block_count == 24)
         {
             spriteRenderer.color = Color.green;
             spriteRendererChild.enabled = true;
         }
-        else{spriteRenderer.color = Color.red; spriteRendererChild.enabled = false;}
+        else{spriteRenderer.color = Color.red; spriteRendererChild.enabled = false;}*/
     }
     //new Color(212,207,159)
     public void TowerOnMouse()
