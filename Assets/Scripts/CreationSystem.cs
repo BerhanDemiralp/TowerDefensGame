@@ -10,6 +10,14 @@ using UnityEngine.UI;
 public class CreationSystem : MonoBehaviour
 {
     private const int maxIndicatorCount = 5;
+    private const string indicator00 = "Standart";
+    private const string indicator01 = "Bomber";
+    private const string indicator02 = "Gunner";
+    private const string indicator03 = "Shredder";
+    private const string indicator04 = "Plague";
+
+
+
     private GameManager gameManager;
     private GameObject[] allEnemies;
     private GameObject[] allTowers;
@@ -120,34 +128,34 @@ public class CreationSystem : MonoBehaviour
         switch (_indicatorType)
         {
             case 0:
-                indicatorTextUp.text = "Bomber";
-                indicatorText.text = "Standart";
-                indicatorTextDown.text = "Plague";
+                indicatorTextUp.text = indicator01;
+                indicatorText.text = indicator00;
+                indicatorTextDown.text = indicator04;
                 color = Color.white;
                 break;
             case 1:
-                indicatorTextUp.text = "Gunner";
-                indicatorText.text = "Bomber";
-                indicatorTextDown.text = "Standart";
+                indicatorTextUp.text = indicator02;
+                indicatorText.text = indicator01;
+                indicatorTextDown.text = indicator00;
 
                 color = Color.red;
                 break;
             case 2:
-                indicatorTextUp.text = "Shredder";
-                indicatorText.text = "Gunner";
-                indicatorTextDown.text = "Bomber";
+                indicatorTextUp.text = indicator03;
+                indicatorText.text = indicator02;
+                indicatorTextDown.text = indicator01;
 
                 color = Color.black;
                 break;
             case 3:
-                indicatorTextUp.text = "Plague";
-                indicatorText.text = "Shredder";
-                indicatorTextDown.text = "Gunner";
+                indicatorTextUp.text =  indicator04;
+                indicatorText.text = indicator03;
+                indicatorTextDown.text = indicator02;
                 break;
             case 4:
-                indicatorTextUp.text = "Standart";
-                indicatorText.text = "Plague";
-                indicatorTextDown.text = "Shredder";
+                indicatorTextUp.text = indicator00;
+                indicatorText.text = indicator04;
+                indicatorTextDown.text = indicator03;
                 break;
         }
     }

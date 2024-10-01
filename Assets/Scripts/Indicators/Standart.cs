@@ -145,10 +145,10 @@ public class Standart : MonoBehaviour
             case 6:
                 level = 1;
                 break;
-            case 12:
+            case 24:
                 level = 2;
                 break;
-            case 24:
+            case 60:
                 level = 3;
                 break;
         }

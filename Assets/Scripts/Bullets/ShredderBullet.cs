@@ -49,12 +49,12 @@ public class ShredderBullet : MonoBehaviour
         if(!gameManager.GetTime())
         {
             rb.velocity = directedSpeed;
-        }
+        }else if(gameManager.GetTime()){rb.velocity = Vector2.zero;}
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.tag == "Edge")
+        if(other.gameObject.tag == "Edge" && level == 3)
         {
             if(other.transform.position.x == 0)
             {
