@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using TMPro;
 using UnityEditor;
@@ -11,6 +12,7 @@ public class GameManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameObject spawnPoint;
     [SerializeField] private GameObject[] mainRoadEnemies;
+    [SerializeField] public EnemyScriptableObject soldier;
     [SerializeField] private GameObject[] sideRoadEnemies;
     [SerializeField] public TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI blockCountText;
@@ -135,6 +137,7 @@ public class GameManager : MonoBehaviour
     {
         summon = Instantiate(mainRoadEnemies[0]);
         MainRoadEnemy summonScript = summon.GetComponent<MainRoadEnemy>();
+        summonScript.SetEnemy(soldier);
         summonScript.SetHitPoints(mainRoadHitPoints);
         summonScript.SetCount(enemyCount);
         enemyCount++;
@@ -150,10 +153,4 @@ public class GameManager : MonoBehaviour
         enemyCount++;
         enemyCountTemp++;
     }
-
-    
-
-
-
-
 }

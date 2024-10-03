@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,8 @@ public class MainRoadEnemy : MonoBehaviour
     [SerializeField] public float enemyCount = 0;
     [SerializeField] private Movement movement;
 
-    private float _speed;
+    private string type;
+    private float _speed2;
     private float damageAmplifier = 1;
     private Color defaultColor;
     private SpriteRenderer spriteRenderer;
@@ -22,6 +24,13 @@ public class MainRoadEnemy : MonoBehaviour
         gameManagerScript = gameManager.GetComponent<GameManager>();
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
         defaultColor = spriteRenderer.color;
+    }
+    public void SetEnemy(EnemyScriptableObject enemy)
+    {
+        type = enemy.type;
+        _speed2 = enemy._speed;
+        damageAmplifier = enemy.damageAmplifier;
+        defaultColor = enemy.color;
     }
 
     public void SetHitPoints(float _hitPoints)
@@ -47,7 +56,7 @@ public class MainRoadEnemy : MonoBehaviour
 
     public void SetSpeed(float _speedMultiplier, float _time)
     {
-        movement.speed = _speed;
+        movement.speed = _speed2;
         StartCoroutine(SetSpeedDefault(_speedMultiplier,_time));
     }
     public void SetDamageAmplifier(float _damageAmplifier, float _time)
